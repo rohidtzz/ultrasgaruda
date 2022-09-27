@@ -68,6 +68,10 @@ class AuthController extends Controller
 
     }
 
+    public function login(){
+        return view('auth.logi');
+    }
+
 
     /**
      * Show the form for creating a new resource.
