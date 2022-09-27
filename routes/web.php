@@ -27,4 +27,5 @@ Route::get('/cart', function () {
 route::get('/register', [AuthController::class,'index']);
 route::post('/register/post', [AuthController::class,'register']);
 
-route::get('/login', [AuthController::class,'login']);
+Route::get('/login', [AuthController::class,'login']);
+
