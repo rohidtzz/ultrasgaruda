@@ -1,0 +1,5 @@
+@extends('layouts.master')
+@extends('layouts.navbar')
+@extends('layouts.hero')
+@extends('layouts.product')
+@extends('layouts.footer')
