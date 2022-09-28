@@ -59,7 +59,7 @@ Route::group(['middleware' => ['role:admin,kordinator,user']], function () {
 
 
 
-Route::get('/logout', [AuthController::class,'logout']);
+Route::get('/logout', [AuthController::class,'logout'])->name('logout');
 
 Route::fallback(function(){
     return redirect('/');
