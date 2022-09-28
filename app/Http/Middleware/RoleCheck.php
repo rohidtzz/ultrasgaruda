@@ -16,7 +16,7 @@ class RoleCheck
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next, ...$roles)
     {
 
         if(!Auth::check()){
@@ -24,10 +24,20 @@ class RoleCheck
 
         }
 
-        if(auth()->user()->role == 'admin' || auth()->user()->role == 'kordinator' || auth()->user()->role == 'user' || auth()->user()->role == 'guest' ){
-            return $next($request);
+        // dd($roles);
+
+
+        if(!in_array($request->user()->role,$roles)){
+            return redirect()->back()->withErrors(['errors' => 'invalid role']);
         }
-        return redirect('/login')->withErrors(['errors' => 'invalid role']);
+
+        return $next($request);
+
+
+
+
+
+
 
 
 

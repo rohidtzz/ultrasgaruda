@@ -18,6 +18,8 @@ use App\Http\Controllers\DashboardController;
 |
 */
 
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -31,25 +33,27 @@ Route::get('/login', [AuthController::class,'login']);
 
 route::post('/login/post',[AuthController::class, 'login_post']);
 
-Route::middleware(['role'])->group(function () {
-    Route::get('/home', [DashboardController::class,'index']);
+
+
+Route::group(['middleware' => ['role:admin']], function () {
+    Route::get('/home', [DashboardController::class,'index'])->name('admin');
     Route::get('/cart', function () {
-        return view('cart');
+                return view('cart');
     });
 });
 
-Route::middleware(['role'])->group(function () {
-    Route::get('/home', [DashboardController::class,'index']);
+Route::group(['middleware' => ['role:admin,kordinator']], function () {
+    Route::get('/home', [DashboardController::class,'index'])->name('kordinator');
     Route::get('/cart', function () {
         return view('cart');
-    });
+});
 });
 
-Route::middleware(['role'])->group(function () {
-    Route::get('/home', [DashboardController::class,'index']);
+Route::group(['middleware' => ['role:admin,kordinator,user']], function () {
+    Route::get('/home', [DashboardController::class,'index'])->name('kordinator');
     Route::get('/cart', function () {
         return view('cart');
-    });
+});
 });
 
 
@@ -58,22 +62,26 @@ Route::middleware(['role'])->group(function () {
 Route::get('/logout', [AuthController::class,'logout']);
 
 Route::fallback(function(){
-    return reedirect('/');
+    return redirect('/');
 });
 
-
-
-// Route::group(['middleware' => ['role']], function () {
-
-//     Route::get('/home', [DashboardController::class,'index']);
+// Route::middleware(['role:admin'])->group(function () {
+//     Route::get('/home', [DashboardController::class,'index'])->name('admin');
+//     Route::get('/cart', function () {
+//         return view('cart');
+//     });
 // });
 
-// Route::group(['middleware' => ['role']], function () {
-
-//     Route::get('/home', [DashboardController::class,'index']);
+// Route::middleware(['role:kordinator'])->group(function () {
+//     Route::get('/home', [DashboardController::class,'index'])->name('kordinator');
+//     // Route::get('/cart', function () {
+//     //     return view('cart');
+//     // });
 // });
 
-// Route::group(['middleware' => ['role']], function () {
-
-//     Route::get('/home', [DashboardController::class,'index']);
+// Route::middleware(['role:user'])->group(function () {
+//     Route::get('/home', [DashboardController::class,'index'])->name('user');
+//     Route::get('/cart', function () {
+//         return view('cart');
+//     });
 // });
