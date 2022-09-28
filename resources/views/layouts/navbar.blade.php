@@ -12,36 +12,43 @@
         <div class="nav-switch">
             <i class="fa fa-bars"></i>
         </div>
-        <div class="header-right">
+
+
+        @if (Auth::check())
+                <div class="header-right">
             <a href="{{ url('/cart') }}" class="card-bag"><img src="{{ asset('plaza/img/icons/bag.png') }}" alt=""><span>2</span></a>
             <a href="#" class="search"><img width="30px" src="{{ asset('plaza/img/icons/icoo.png') }}" alt=""></a>
         </div>
+        @else
+        <div class="header-right">
+            <a  href="{{ url('login') }}"><button style="display: inline-block;
+                font-size: 14px;
+                text-transform: uppercase;
+                font-weight: 600;
+                color: #fff;
+                padding: 1px 5px 0px;
+                margin-left: 50px;" class="btn btn-info">login</button>
+            </a>
 
-        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  ...
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-              </div>
-            </div>
-          </div>
+            <a  href="{{ url('register') }}"><button style="
+                font-size: 14px;
+                text-transform: uppercase;
+                font-weight: 600;
+                color: #fff;
+                padding: 1px 5px 0px;
+                " class="btn btn-info">register</button>
+            </a>
+        </div>
+        @endif
+
+
+
 
 
 
         <!-- site menu -->
         <ul class="main-menu">
-            <li><a href="index.html">Home</a></li>
+            <li><a href="{{ url('/') }}">Home</a></li>
             <li><a  href="#section1">Product</a></li>
             {{-- <li><a href="#">Man</a></li> --}}
             {{-- <li><a href="#">LookBook</a></li>

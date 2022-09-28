@@ -3,6 +3,10 @@
 <br><br><br><br><br>
 @section('cart')
 <style>
+    body{
+        background-image: url({{ asset('plaza/img/ind.jpg') }}) ;
+    }
+
     .title{
     margin-bottom: 5vh;
 }

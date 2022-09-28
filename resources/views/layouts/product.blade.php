@@ -30,7 +30,11 @@
                     <div class="product-info">
                         <h6>tiket nobar</h6>
                         <p>Rp. 20.000</p>
-                        <a href="#" class="site-btn btn-line">BUY NOW!</a>
+                        @if (Auth::check())
+                        <a href="#" class="site-btn btn-line">ADD TO CART !</a>
+                        @else
+                        <a href="{{ url('/login') }}" class="site-btn btn-line">BUY NOW!</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -53,7 +57,12 @@
                     <div class="product-info">
                         <h6>Baju Ultras Garuda</h6>
                         <p>Rp. 120.000</p>
-                        <a href="#" class="site-btn btn-line">BUY NOW!</a>
+                        @if (Auth::check())
+                        <a href="#" class="site-btn btn-line">ADD TO CART !</a>
+                        @else
+                        <a href="{{ url('/login') }}" class="site-btn btn-line">BUY NOW!</a>
+                        @endif
+
                     </div>
                 </div>
             </div>

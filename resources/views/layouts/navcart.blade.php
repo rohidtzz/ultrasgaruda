@@ -1,6 +1,6 @@
 @section('navcart')
 <!-- Header section -->
-<header style="background-color: rgb(234, 51, 51); height:100px;" class="header-section">
+<header style="" class="header-section">
     <div class="container-fluid">
         <!-- logo -->
         <div class="site-logo">
@@ -19,8 +19,8 @@
 
         <!-- site menu -->
         <ul class="main-menu">
-            <li><a  href="index.html">Home</a></li>
-            <li><a  href="#section1">Product</a></li>
+            <li><a  href="{{ url('/') }}">Home</a></li>
+            <li><a  href="{{ url('/#section1') }}">Product</a></li>
             {{-- <li><a href="#">Man</a></li> --}}
             {{-- <li><a href="#">LookBook</a></li>
             <li><a href="#">Blog</a></li> --}}

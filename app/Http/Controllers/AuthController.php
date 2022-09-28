@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Validator;
 
+use Auth;
+
 use App\Models\User;
 
 class AuthController extends Controller
@@ -24,16 +26,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
 
-        // $validator = $request->validate([
-        //     'name' => ['required', 'max:50', 'min:3'],
-        //     'username' => ['required', 'max:10', 'min:5', 'unique:users,username'],
-        //     'password' => ['required'],
-        //     'email' => ['required','email','unique:users,email'],
-        //     'no_hp' => ['required', 'numeric'],
-        //     'gender' => ['required']
-        // ]);
-
-        $validator = Validator::make($request->all(), [ // <---
+        $validator = Validator::make($request->all(), [
             'name' => ['required', 'max:50', 'min:3'],
             'username' => ['required', 'max:20', 'min:5', 'unique:users,username'],
             'password' => ['required'],
@@ -63,13 +56,38 @@ class AuthController extends Controller
             return redirect('/register')->withErrors('register failed');
         }
 
-        return redirect('register')->with(['success' => 'Registration Success']);
+        return redirect('/login')->with(['success' => 'Registration Success']);
 
 
     }
 
     public function login(){
+        if(Auth::check()){
+            return redirect('/home');
+        }
+
         return view('auth.login');
+    }
+
+    public function login_post(Request $request){
+
+
+        if(!Auth::attempt(['username' => $request->username, 'password' => $request->password])){
+            return redirect('/login')->withErrors(['errors' => 'username or password is incorrect']);
+        }
+
+        return redirect('/');
+
+    }
+
+    public function logout(){
+        Auth::logout();
+
+        // request()->session()->invalidate();
+
+        // request()->session()->regenerateToken();
+
+        return redirect('/login')->with(['success' => 'success logout']);;
     }
 
 

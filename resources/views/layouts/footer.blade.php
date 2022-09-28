@@ -16,13 +16,13 @@
         ></a>
 
         <!-- Twitter -->
-        <a
+        {{-- <a
           class="btn btn-link btn-floating btn-lg text-dark m-1"
           href="#!"
           role="button"
           data-mdb-ripple-color="dark"
           ><i class="fab fa-twitter"></i
-        ></a>
+        ></a> --}}
 
         <!-- Google -->
         {{-- <a
@@ -36,7 +36,7 @@
         <!-- Instagram -->
         <a
           class="btn btn-link btn-floating btn-lg text-dark m-1"
-          href="#!"
+          href="https://www.instagram.com/ultrasgarudaindonesia"
           role="button"
           data-mdb-ripple-color="dark"
           ><i class="fab fa-instagram"></i
