@@ -76,7 +76,7 @@ class AuthController extends Controller
             return redirect('/login')->withErrors(['errors' => 'username or password is incorrect']);
         }
 
-        return redirect('/home');
+        return redirect('/');
 
     }
 

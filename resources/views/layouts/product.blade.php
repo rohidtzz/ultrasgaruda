@@ -12,11 +12,11 @@
         </ul> --}}
 
         <div class="row" id="product-filter">
-            <div class="mix col-lg-3 col-md-6 best">
+            {{-- <div class="mix col-lg-3 col-md-6 best">
                 <div class="product-item">
                     <figure>
                         <img src="{{ asset('plaza/img/tiket.jpg') }}" alt="">
-                        {{-- <div class="pi-meta">
+                        <div class="pi-meta">
                             <div class="pi-m-left">
                                 <a href=""><img src="{{ asset('plaza/img/icons/eye.png') }}" alt=""></a>
                                 <a href=""><p>quick view</p></a>
@@ -25,7 +25,7 @@
                                 <img src="{{ asset('plaza/img/icons/heart.png') }}" alt="">
                                 <p>save</p>
                             </div>
-                        </div> --}}
+                        </div>
                     </figure>
                     <div class="product-info">
                         <h6>tiket nobar</h6>
@@ -37,7 +37,13 @@
                         @endif
                     </div>
                 </div>
-            </div>
+            </div> --}}
+
+            @foreach ($all as $a )
+
+
+
+
             <div class="mix col-lg-3 col-md-6 new">
                 <div class="product-item">
                     <figure>
@@ -54,11 +60,18 @@
                             </div>
                         </div> --}}
                     </figure>
+                    @php
+                        $number_format  = number_format($a->price);
+                    @endphp
                     <div class="product-info">
-                        <h6>Baju Ultras Garuda</h6>
-                        <p>Rp. 120.000</p>
+
+
+
+                        <h6>{{ $a->name }}</h6>
+                        <div>size: {{ $a->size }}</div>
+                        <p><?php echo 'Rp. ' . $number_format; ?></p>
                         @if (Auth::check())
-                        <a href="#" class="site-btn btn-line">ADD TO CART !</a>
+                        <a href="{{ url('/cart/add/'.$a->id ) }}" class="site-btn btn-line">ADD TO CART !</a>
                         @else
                         <a href="{{ url('/login') }}" class="site-btn btn-line">BUY NOW!</a>
                         @endif
@@ -66,6 +79,8 @@
                     </div>
                 </div>
             </div>
+
+            @endforeach
 
         </div>
     </div>

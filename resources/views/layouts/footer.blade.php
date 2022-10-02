@@ -1,76 +1,42 @@
 @section('footer')
 
 
-<footer class="text-center text-white" style="background-color: #f1f1f1;">
-    <!-- Grid container -->
-    <div class="container pt-4">
-      <!-- Section: Social media -->
-      <section class="mb-4">
-        <!-- Facebook -->
-        <a
-          class="btn btn-link btn-floating btn-lg text-dark m-1"
-          href="https://www.facebook.com/Ultras-Garuda-Indonesia-183395083349363"
-          role="button"
-          data-mdb-ripple-color="dark"
-          ><i class="fab fa-facebook-f"></i
-        ></a>
 
-        <!-- Twitter -->
-        {{-- <a
-          class="btn btn-link btn-floating btn-lg text-dark m-1"
-          href="#!"
-          role="button"
-          data-mdb-ripple-color="dark"
-          ><i class="fab fa-twitter"></i
-        ></a> --}}
+<link rel="stylesheet" href="{{ asset('footerr/css/ionicons.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('footerr/css/style.css') }}">
 
-        <!-- Google -->
-        {{-- <a
-          class="btn btn-link btn-floating btn-lg text-dark m-1"
-          href="#!"
-          role="button"
-          data-mdb-ripple-color="dark"
-          ><i class="fab fa-google"></i
-        ></a> --}}
+<script src="{{ asset('footerr/js/jquery.min.js') }}"></script>
+<script src="{{ asset('footerr/js/popper.js') }}"></script>
+<script src="{{ asset('footerr/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('footerr/js/main.js') }}"></script>
 
-        <!-- Instagram -->
-        <a
-          class="btn btn-link btn-floating btn-lg text-dark m-1"
-          href="https://www.instagram.com/ultrasgarudaindonesia"
-          role="button"
-          data-mdb-ripple-color="dark"
-          ><i class="fab fa-instagram"></i
-        ></a>
+<footer class="footer-07">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 text-center">
+                <h2 class="footer-heading"><a href="#" class="logo">Ultrasgaruda.org</a></h2>
+                <p class="menu">
+                    <a href="">Home</a>
 
-        <!-- Linkedin -->
-        {{-- <a
-          class="btn btn-link btn-floating btn-lg text-dark m-1"
-          href="#!"
-          role="button"
-          data-mdb-ripple-color="dark"
-          ><i class="fab fa-linkedin"></i
-        ></a>
-        <!-- Github -->
-        <a
-          class="btn btn-link btn-floating btn-lg text-dark m-1"
-          href="#"
-          role="button"
-          data-mdb-ripple-color="dark"
-          ><i class="fab fa-github"></i
-        ></a> --}}
-      </section>
-      <!-- Section: Social media -->
+                    <a href="#section1">Product</a>
+                    <a href="#">Contact</a>
+                </p>
+                <ul class="ftco-footer-social p-0">
+      <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Twitter"><span class="ion-logo-twitter"></span></a></li>
+      <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Facebook"><span class="ion-logo-facebook"></span></a></li>
+      <li class="ftco-animate"><a href="#" data-toggle="tooltip" data-placement="top" title="Instagram"><span class="ion-logo-instagram"></span></a></li>
+    </ul>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12 text-center">
+                <p class="copyright"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved
+              <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+            </div>
+        </div>
     </div>
-    <!-- Grid container -->
-
-    <!-- Copyright -->
-    <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-      © 2022 Copyright:
-      <a class="text-dark" href="">Ultas Garuda</a>
-    </div>
-    <!-- Copyright -->
-  </footer>
-<!-- Footer top section end -->
+</footer>
 
 
 @endsection

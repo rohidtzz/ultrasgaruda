@@ -4,7 +4,7 @@
 <section class="hero-section set-bg" data-setbg="{{ asset('plaza/img/ind.jpg') }}">
     <div class="hero-slider owl-carousel">
         <div class="hs-item">
-            <div class="hs-left"><img src="{{ asset('plaza/img/ult.png') }}" alt=""></div>
+            <div class="hs-left"><img src="{{ asset('plaza/img/tgr.png') }}" alt=""></div>
             <div class="hs-right">
                 <div class="hs-content">
                     {{-- <div class="price">from $19.90</div> --}}

@@ -11,8 +11,8 @@
             <i class="fa fa-bars"></i>
         </div>
         <div class="header-right">
-            <a href="{{ url('/cart') }}" class="card-bag"><img src="{{ asset('plaza/img/icons/bag.png') }}" alt=""><span>2</span></a>
-            <a href="#" class="search"><img width="30px" src="{{ asset('plaza/img/icons/icoo.png') }}" alt=""></a>
+            <a href="{{ url('/cart') }}" class="card-bag"><img src="{{ asset('plaza/img/icons/bag.png') }}" alt=""><span>{{ $cart }}</span></a>
+            <a href="{{ url('/home') }}" class="search"><img width="30px" src="{{ asset('plaza/img/icons/icoo.png') }}" alt=""></a>
         </div>
 
 

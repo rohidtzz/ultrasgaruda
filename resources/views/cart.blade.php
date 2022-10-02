@@ -160,31 +160,32 @@ a:hover{
                     {{-- <div class="col align-self-center text-right text-muted">3 items</div> --}}
                 </div>
             </div>
+            @foreach ($all as $a )
+
+
+
+
+            @php
+                        $number_format  = number_format($a->total);
+            @endphp
+
+
             <div class="row border-top border-bottom">
                 <div class="row main align-items-center">
                     <div class="col-2"><img class="img-fluid" src="{{ asset('plaza/img/tiket.jpg') }}"></div>
                     <div class="col">
-                        <div class="row text-muted">Shirt</div>
-                        <div class="row">Cotton T-shirt</div>
+                        <div class="row">{{ App\Models\Product::find($a->product_id)->name }}</div>
+                        <div class="row text-muted">{{ $a->product->size }}</div>
                     </div>
                     <div class="col">
-
-                        <div class="form-group" style="margin-top: 28px; margin-left:4px; width:60px;" >
-
-                            <select class="form-control" id="exampleFormControlSelect1">
-                              <option>1</option>
-                              <option>2</option>
-                              <option>3</option>
-                              <option>4</option>
-                              <option>5</option>
-                            </select>
-                          </div>
-
+                        <a href="{{ url('/cart/qty/min/'.$a->id ) }}" min="0">-</a><a href="#" value="{{ $a->qty }}" min="0" class="border">{{ $a->qty }}</a><a href="{{ url('/cart/qty/up/'.$a->id ) }}">+</a>
                     </div>
-                    <div class="col">&nbsp; 20.000 <span class="close">&#10005;</span></div>
+
+                    <div class="col">&nbsp; <?php echo 'Rp. ' . $number_format; ?> <span class="close"><a href="{{ url('/cart/destroy/'.$a->id ) }}">&#10005;</a></span></div>
                 </div>
             </div>
-            <div class="row">
+            @endforeach
+            {{-- <div class="row">
                 <div class="row main align-items-center">
                     <div class="col-2"><img class="img-fluid" src="{{ asset('plaza/img/baju.jpg') }}"></div>
                     <div class="col">
@@ -194,6 +195,8 @@ a:hover{
                     <div class="col">
                         <div class="form-group" style="margin-top: 28px; margin-left:4px; width:60px;" >
 
+
+                            <input value="1" disabled class="form-control" >
                             <select class="form-control" id="exampleFormControlSelect1">
                               <option>1</option>
                               <option>2</option>
@@ -205,7 +208,7 @@ a:hover{
                     </div>
                     <div class="col">&nbsp; 120.000 <span class="close">&#10005;</span></div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="back-to-shop"><a href="{{ url('/#section1') }}">&leftarrow;</a><span class="text-muted">Back to shop</span></div>
         </div>
@@ -221,7 +224,8 @@ a:hover{
             </form> --}}
             <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                 <div class="col">TOTAL PRICE</div>
-                <div class="col text-right">&euro; 137.00</div>
+                <div class="col text-right">&nbsp; Rp.
+                {{ number_format($total)  }}</div>
             </div>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >CHECKOUT</button>
         </div>
