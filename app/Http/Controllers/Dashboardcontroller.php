@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\User;
 
 use Illuminate\Http\Request;
 
@@ -15,7 +16,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+
+        $user = User::all()->count();
+        $product = Product::all()->count();
+
+
+        return view('dashboard.index',compact('user','product'));
     }
 
     public function product()
@@ -27,6 +33,8 @@ class DashboardController extends Controller
 
         return view('dashboard.product',compact('all'));
     }
+
+
 
     /**
      * Store a newly created resource in storage.

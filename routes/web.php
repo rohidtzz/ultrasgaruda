@@ -53,6 +53,10 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::get('/home', [DashboardController::class,'index'])->name('admin');
     Route::get('/home/product', [DashboardController::class,'product']);
 
+    //product home
+    Route::get('/home/product/delete/{id}', [ProductController::class,'destroyproduct']);
+    Route::post('/home/product/create/', [ProductController::class,'create']);
+
     //cart
     Route::get('/cart', [CartController::class,'index']);
     Route::post('/cart/add/', [CartController::class,'create']);
@@ -67,6 +71,9 @@ Route::group(['middleware' => ['role:admin,kordinator']], function () {
     //dashboard
     Route::get('/home', [DashboardController::class,'index'])->name('kordinator');
     Route::get('/home/product', [DashboardController::class,'product']);
+
+    //product home
+    Route::post('/home/product/create/', [ProductController::class,'create']);
 
     //cart
     Route::get('/cart', [CartController::class,'index']);
@@ -98,9 +105,9 @@ Route::group(['middleware' => ['role:admin,kordinator,user']], function () {
 
 Route::get('/logout', [AuthController::class,'logout'])->name('logout');
 
-Route::fallback(function(){
-    return redirect('/');
-});
+// Route::fallback(function(){
+//     return redirect('/');
+// });
 
 // Route::middleware(['role:admin'])->group(function () {
 //     Route::get('/home', [DashboardController::class,'index'])->name('admin');

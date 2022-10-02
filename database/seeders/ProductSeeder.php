@@ -21,7 +21,7 @@ class ProductSeeder extends Seeder
             'price' => 100000,
             'size' => "S,M,L,XL,XXL",
             'category_id' => 1,
-            'image' => 'product/img/1.jpg',
+            'image' => '1.jpg',
             'stock' => 99
         ]);
 
@@ -30,7 +30,7 @@ class ProductSeeder extends Seeder
             'price' => 110000,
             'size' => "S,M,L,XL,XXL",
             'category_id' => 1,
-            'image' => 'product/img/2.jpg',
+            'image' => '2.jpg',
             'stock' => 99
         ]);
 
@@ -39,7 +39,7 @@ class ProductSeeder extends Seeder
             'price' => 120000,
             'size' => "S,M,L,XL,XXL",
             'category_id' => 2,
-            'image' => 'product/img/3.jpg',
+            'image' => '3.jpg',
             'stock' => 99
         ]);
 
@@ -48,7 +48,7 @@ class ProductSeeder extends Seeder
             'price' => 130000,
             'size' => "S,M,L,XL,XXL",
             'category_id' => 2,
-            'image' => 'product/img/4.jpg',
+            'image' => '4.jpg',
             'stock' => 99
         ]);
 
@@ -57,7 +57,7 @@ class ProductSeeder extends Seeder
             'price' => 140000,
             'size' => "S,M,L,XL,XXL",
             'category_id' => 2,
-            'image' => 'product/img/5.jpg',
+            'image' => '5.jpg',
             'stock' => 99
         ]);
 
@@ -66,7 +66,7 @@ class ProductSeeder extends Seeder
             'price' => 150000,
             'size' => "S,M,L,XL,XXL",
             'category_id' => 1,
-            'image' => 'product/img/6.jpg',
+            'image' => '6.jpg',
             'stock' => 99
         ]);
 

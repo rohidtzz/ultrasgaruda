@@ -7,6 +7,10 @@ use App\Models\Category;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 
+use File;
+
+use Validator;
+
 use Auth;
 
 class ProductController extends Controller
@@ -44,14 +48,89 @@ class ProductController extends Controller
         return view('welcome.welcome',compact('all','cart'));
     }
 
+
+    public function destroyproduct($id){
+
+
+
+
+        $product = Product::find($id);
+
+
+        if(File::exists(public_path('product/img/'.$product->image))){
+            File::delete(public_path('product/img/'.$product->image));
+        }else{
+            dd('File does not exists.');
+        }
+
+        Product::destroy($id);
+
+
+        return redirect()->back();
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+
+        // $postData = $request->only('file');
+        //     $file = $postData['file'];
+
+        //     $fileArray = array('image' => $file);
+
+
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+            'price' => ['required'],
+            'stock' => ['required'],
+        ]);
+
+        // dd($validator);
+
+        if($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+
+        $this->validate($request, [
+			'image' => 'required|file|image|mimes:jpeg,png,jpg|max:2048'
+		]);
+
+        $file = $request->file('image');
+		$nama_file = $file->getClientOriginalName();
+		$tujuan_upload = 'product/img';
+		$file->move($tujuan_upload,$nama_file);
+
+
+        $product = Product::create([
+            'name' => $request->name,
+            'image' => $nama_file,
+            'price' => $request->price,
+            'stock' => $request->stock,
+            'size' => "S,M,L,XL,XXL",
+            'category_id' => 1,
+        ]);
+
+        // dd($product);
+
+
+
+        if(!$product){
+            return redirect()->back()->withErrors('register failed');
+        }
+
+        return redirect()->back()->with(['success' => 'Registration Success']);
+
+
+
+
     }
 
     /**

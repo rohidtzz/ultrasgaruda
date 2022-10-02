@@ -119,6 +119,8 @@ class CartController extends Controller
                 return redirect('/cart');
             }
 
+
+
             $ce = Cart::create([
                 'qty' => 1,
                 'no_invoice' => "INV".date('dmy').date('his').$user,
@@ -135,7 +137,25 @@ class CartController extends Controller
 
 
 
+
+
             // dd($tset);
+
+            return redirect('/cart');
+        }
+
+        if($request->sizes == 'XXL'){
+
+            $ce = Cart::create([
+                'qty' => 1,
+                'no_invoice' => "INV".date('dmy').date('his').$user,
+                'subtotal' => 0,
+                'size' => $request->sizes,
+                'total' => $price+5000,
+                'user_id' => $user,
+                'product_id' => $request->id
+
+            ]);
 
             return redirect('/cart');
         }
@@ -185,6 +205,16 @@ class CartController extends Controller
 
         $pro = Product::find($cart->product_id);
 
+        if($cart->size == 'XXL'){
+            $tset = Cart::where('id',$id)
+            ->update([
+                'qty' => $cart->qty+1,
+                'total' => $cart->total+$pro->price+5000,
+            ]);
+
+            return redirect('/cart');
+        }
+
         $tset = Cart::where('id',$id)
             ->update([
                 'qty' => $cart->qty+1,
@@ -203,6 +233,7 @@ class CartController extends Controller
 
         $pro = Product::find($cart->product_id);
 
+
         if($cart->qty == 1){
 
             Cart::where('id',$id)
@@ -210,6 +241,15 @@ class CartController extends Controller
                 'qty' => 1,
             ]);
 
+            return redirect('/cart');
+        }
+
+        if($cart->size == 'XXL'){
+            $tset = Cart::where('id',$id)
+            ->update([
+                'qty' => $cart->qty-1,
+                'total' => $cart->total-$pro->price-5000,
+            ]);
             return redirect('/cart');
         }
 

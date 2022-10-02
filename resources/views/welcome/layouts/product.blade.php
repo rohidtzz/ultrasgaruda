@@ -47,7 +47,7 @@
             <div class="mix col-lg-3 col-md-6 new">
                 <div class="product-item">
                     <figure>
-                        <img src="{{ asset(''.$a->image) }}" alt="">
+                        <img src="{{ asset('/product/img/'.$a->image) }}" alt="">
                         <div class="bache sale">SALE</div>
                         {{-- <div class="pi-meta">
                             <div class="pi-m-left">
@@ -76,7 +76,7 @@
                             <option value="M">M</option>
                             <option value="L">L</option>
                             <option value="XL">XL</option>
-                            <option value="XXL">XLL</option>
+                            <option value="XXL">XXL</option>
                         </select></div>
                         <div>Stock: {{ $a->stock }}</div>
 

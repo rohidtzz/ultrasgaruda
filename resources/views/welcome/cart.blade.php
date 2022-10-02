@@ -175,7 +175,7 @@ a:hover{
 
             <div class="row border-top border-bottom">
                 <div class="row main align-items-center">
-                    <div class="col-2"><img class="img-fluid" src="{{ asset(''.$el->image) }}"></div>
+                    <div class="col-2"><img class="img-fluid" src="{{ asset('/product/img/'.$el->image) }}"></div>
                     <div class="col">
                         <div class="row">{{ App\Models\Product::find($a->product_id)->name }}</div>
                         <div class="row text-muted">Size: {{ $a->size }}</div>
