@@ -1,0 +1,4 @@
+@section('endwrap')
+</main>
+
+@endsection

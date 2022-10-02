@@ -1,5 +1,5 @@
-@extends('layouts.master')
-@extends('layouts.navcart')
+@extends('welcome.layouts.master')
+@extends('welcome.layouts.navcart')
 <br><br><br><br><br>
 @section('cart')
 
@@ -157,7 +157,9 @@ a:hover{
             <div class="title">
                 <div class="row">
                     <div class="col"><h4><b>Shopping Cart</b></h4></div>
-                    {{-- <div class="col align-self-center text-right text-muted">3 items</div> --}}
+                    {{-- <div class="col align-self-center text-right "><button style="width:50px;" class="btn btn-primary">EDIT</button></div> --}}
+
+
                 </div>
             </div>
             @foreach ($all as $a )
@@ -167,16 +169,18 @@ a:hover{
 
             @php
                         $number_format  = number_format($a->total);
+                        $el = App\Models\Product::find($a->product_id);
             @endphp
 
 
             <div class="row border-top border-bottom">
                 <div class="row main align-items-center">
-                    <div class="col-2"><img class="img-fluid" src="{{ asset('plaza/img/tiket.jpg') }}"></div>
+                    <div class="col-2"><img class="img-fluid" src="{{ asset(''.$el->image) }}"></div>
                     <div class="col">
                         <div class="row">{{ App\Models\Product::find($a->product_id)->name }}</div>
-                        <div class="row text-muted">{{ $a->product->size }}</div>
+                        <div class="row text-muted">Size: {{ $a->size }}</div>
                     </div>
+
                     <div class="col">
                         <a href="{{ url('/cart/qty/min/'.$a->id ) }}" min="0">-</a><a href="#" value="{{ $a->qty }}" min="0" class="border">{{ $a->qty }}</a><a href="{{ url('/cart/qty/up/'.$a->id ) }}">+</a>
                     </div>
@@ -235,6 +239,8 @@ a:hover{
 
 <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
+        <form name="frm_edit" id="frm_edit" class="form-horizontal" action="{{url('transaction')}}" method="POST" enctype="multipart/form-data">
+            @csrf
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">CheckOut</h5>
@@ -244,9 +250,11 @@ a:hover{
 
         </div>
         <div class="modal-footer">
+            <input type="hidden" name="id" id="id">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
         </div>
+    </form>
       </div>
     </div>
   </div>

@@ -29,7 +29,7 @@ class ProductController extends Controller
 
         if(!$cekauth){
             $cart = false;
-            return view('welcome',compact('all','cart'));
+            return view('welcome.welcome',compact('all','cart'));
         }
 
         $id = Auth()->user()->id;
@@ -41,7 +41,7 @@ class ProductController extends Controller
         // $cart = 1;
 
 
-        return view('welcome',compact('all','cart'));
+        return view('welcome.welcome',compact('all','cart'));
     }
 
     /**

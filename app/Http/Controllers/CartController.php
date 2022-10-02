@@ -19,18 +19,45 @@ class CartController extends Controller
 
         $all = Cart::where('user_id',$user)->get();
 
+
+
         $total = 0;
         $quan = 0;
         $harga = 0;
 
+        // dd($all);
+
+
+
+
         foreach ($all as $m=>$value){
 
-            $quan +=$value['qty'];
+            // $quan +=$value['qty'];
 
             $harga +=$value['total'];
 
-            $total = $harga * $quan;
+
+            $total = $harga;
+
+
+
         }
+
+
+
+            // foreach ($all as $m=>$value){
+
+            //     $quan +=$value['qty'];
+
+
+            //     $harga +=$value['total'];
+
+
+            //     $total = $harga * $quan;
+            // }
+
+
+
 
         // dd($all);
 
@@ -39,7 +66,7 @@ class CartController extends Controller
 
         // dd($all);
 
-        return view('cart',compact('all','cart','total'));
+        return view('welcome.cart',compact('all','cart','total'));
     }
 
     /**
@@ -47,10 +74,10 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($id)
+    public function create(Request $request)
     {
 
-        $price = Product::find($id)->price;
+        $price = Product::find($request->id)->price;
 
 
 
@@ -60,38 +87,91 @@ class CartController extends Controller
 
         $user = Auth()->user()->id;
 
-        $cart = Cart::where('product_id',$id)->where('user_id',$user)->first();
+        $cart = Cart::where('product_id',$request->id)->where('user_id',$user)->first();
 
-        // dd($cart);
+        // dd($cart->size);
+
 
         if($cart != null){
 
-            $tset = Cart::where('product_id',$id)
-            ->update([
-                'qty' => $cart->qty+1,
-                'total' => $cart->total+$price
+            // $row = [
+            //     'size' => $cart->size.','.$request->sizes
+            // ];
+
+            if($cart->size == $request->sizes){
+                // $ce =Cart::where('product_id',$request->id)
+                // ->update([
+                //     'qty' => $cart->qty+1,
+                //     'total' => $cart->total+$price,
+                //     'size' => $cart->size,
+                // ]);
+                $tset = Cart::where('product_id',$request->id)
+                ->update([
+                    'qty' => $cart->qty+1,
+                    'total' => $cart->total,
+                    'size' => $cart->size.','.$request->sizes
+                ]);
+
+
+
+                // dd($cek);
+
+                return redirect('/cart');
+            }
+
+            $ce = Cart::create([
+                'qty' => 1,
+                'no_invoice' => "INV".date('dmy').date('his').$user,
+                'subtotal' => 0,
+                'size' => $request->sizes,
+                'total' => $price,
+                'user_id' => $user,
+                'product_id' => $request->id
+
             ]);
+
+
+
+
+
 
             // dd($tset);
 
             return redirect('/cart');
         }
 
-
-
         $cek = Cart::create([
             'qty' => 1,
             'no_invoice' => "INV".date('dmy').date('his').$user,
             'subtotal' => 0,
+            'size' => $request->sizes,
             'total' => $price,
             'user_id' => $user,
-            'product_id' => $id
+            'product_id' => $request->id
 
         ]);
 
+        return redirect('/cart');
+
+
+
+
+
+
+
+
+
+        // if($cart->size == $request->sizes){
+
+        // }
+
+        // $cor = ['size' => $request->sizes];
+
+
+
         // dd($cek);
 
-        return redirect('/cart');
+
 
 
     }
@@ -103,17 +183,13 @@ class CartController extends Controller
 
         $cart = Cart::where('id',$id)->where('user_id',$user)->first();
 
-
-        // dd($cart->qty);
+        $pro = Product::find($cart->product_id);
 
         $tset = Cart::where('id',$id)
             ->update([
                 'qty' => $cart->qty+1,
+                'total' => $cart->total+$pro->price,
             ]);
-
-            // dd($tset);
-
-            // dd($tset);
 
             return redirect('/cart');
 
@@ -125,7 +201,7 @@ class CartController extends Controller
 
         $cart = Cart::where('id',$id)->where('user_id',$user)->first();
 
-        // dd($cart->qty);
+        $pro = Product::find($cart->product_id);
 
         if($cart->qty == 1){
 
@@ -134,15 +210,13 @@ class CartController extends Controller
                 'qty' => 1,
             ]);
 
-            // Cart::destroy($id);
-
             return redirect('/cart');
-
         }
 
         $tset = Cart::where('id',$id)
             ->update([
                 'qty' => $cart->qty-1,
+                'total' => $cart->total-$pro->price,
             ]);
 
 

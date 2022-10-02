@@ -17,45 +17,57 @@ class ProductSeeder extends Seeder
     public function run()
     {
         Product::create([
-            'name' => "baju 1",
-            'price' => 10000,
-            'size' => "S,M,L,XL,XXL",
-            'category_id' => 1
-        ]);
-
-        Product::create([
-            'name' => "kertas 1",
+            'name' => "Baju Rajut",
             'price' => 100000,
             'size' => "S,M,L,XL,XXL",
-            'category_id' => 1
+            'category_id' => 1,
+            'image' => 'product/img/1.jpg',
+            'stock' => 99
         ]);
 
         Product::create([
-            'name' => "baju 2",
-            'price' => 20000,
+            'name' => "Baju Ultras",
+            'price' => 110000,
             'size' => "S,M,L,XL,XXL",
-            'category_id' => 2
+            'category_id' => 1,
+            'image' => 'product/img/2.jpg',
+            'stock' => 99
         ]);
 
         Product::create([
-            'name' => "kertas 2",
-            'price' => 200000,
+            'name' => "Baju Ngaji",
+            'price' => 120000,
             'size' => "S,M,L,XL,XXL",
-            'category_id' => 2
+            'category_id' => 2,
+            'image' => 'product/img/3.jpg',
+            'stock' => 99
         ]);
 
         Product::create([
-            'name' => "kertas 5",
-            'price' => 200000,
+            'name' => "Baju Tidur",
+            'price' => 130000,
             'size' => "S,M,L,XL,XXL",
-            'category_id' => 2
+            'category_id' => 2,
+            'image' => 'product/img/4.jpg',
+            'stock' => 99
         ]);
 
         Product::create([
-            'name' => "kertas 8",
-            'price' => 200000,
+            'name' => "Bikini",
+            'price' => 140000,
             'size' => "S,M,L,XL,XXL",
-            'category_id' => 1
+            'category_id' => 2,
+            'image' => 'product/img/5.jpg',
+            'stock' => 99
+        ]);
+
+        Product::create([
+            'name' => "Rok",
+            'price' => 150000,
+            'size' => "S,M,L,XL,XXL",
+            'category_id' => 1,
+            'image' => 'product/img/6.jpg',
+            'stock' => 99
         ]);
 
     }

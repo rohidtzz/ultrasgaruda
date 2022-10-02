@@ -2,6 +2,8 @@
 <!-- Created By CodingLab - www.codinglabweb.com -->
 <html lang="en" dir="ltr">
   <head>
+    <title>Register | Ultras Garuda Indonesia</title>
+    <link rel="shortcut icon" href="{{ asset('ico/ico.ico') }}" type="image/x-icon">
     <meta charset="UTF-8">
     <!---<title> Responsive Registration Form | CodingLab </title>--->
     <link rel="stylesheet" href="style.css">

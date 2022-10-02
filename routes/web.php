@@ -48,34 +48,49 @@ route::post('/login/post',[AuthController::class, 'login_post']);
 
 
 Route::group(['middleware' => ['role:admin']], function () {
-    Route::get('/home', [DashboardController::class,'index'])->name('admin');
 
+    //dashboard
+    Route::get('/home', [DashboardController::class,'index'])->name('admin');
+    Route::get('/home/product', [DashboardController::class,'product']);
+
+    //cart
     Route::get('/cart', [CartController::class,'index']);
-    Route::get('/cart/add/{id}', [CartController::class,'create']);
+    Route::post('/cart/add/', [CartController::class,'create']);
     Route::get('/cart/qty/up/{id}', [CartController::class,'plusqty']);
     Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
     Route::get('/cart/destroy/{id}', [CartController::class,'destroy']);
+
 });
 
 Route::group(['middleware' => ['role:admin,kordinator']], function () {
-    Route::get('/home', [DashboardController::class,'index'])->name('kordinator');
 
+    //dashboard
+    Route::get('/home', [DashboardController::class,'index'])->name('kordinator');
+    Route::get('/home/product', [DashboardController::class,'product']);
+
+    //cart
     Route::get('/cart', [CartController::class,'index']);
-    Route::get('/cart/add/{id}', [CartController::class,'create']);
+    Route::post('/cart/add/', [CartController::class,'create']);
     Route::get('/cart/qty/up/{id}', [CartController::class,'plusqty']);
     Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
     Route::get('/cart/destroy/{id}', [CartController::class,'destroy']);
+
 
 });
 
 Route::group(['middleware' => ['role:admin,kordinator,user']], function () {
-    Route::get('/home', [DashboardController::class,'index'])->name('kordinator');
 
+    //dashboard
+    Route::get('/home', [DashboardController::class,'index'])->name('kordinator');
+    Route::get('/home/product', [DashboardController::class,'product']);
+
+    //cart
     Route::get('/cart', [CartController::class,'index']);
-    Route::get('/cart/add/{id}', [CartController::class,'create']);
+    Route::post('/cart/add/', [CartController::class,'create']);
     Route::get('/cart/qty/up/{id}', [CartController::class,'plusqty']);
     Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
     Route::get('/cart/destroy/{id}', [CartController::class,'destroy']);
+
 });
 
 

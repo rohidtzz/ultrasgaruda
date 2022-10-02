@@ -47,7 +47,7 @@
             <div class="mix col-lg-3 col-md-6 new">
                 <div class="product-item">
                     <figure>
-                        <img src="{{ asset('plaza/img/baju.jpg') }}" alt="">
+                        <img src="{{ asset(''.$a->image) }}" alt="">
                         <div class="bache sale">SALE</div>
                         {{-- <div class="pi-meta">
                             <div class="pi-m-left">
@@ -68,10 +68,22 @@
 
 
                         <h6>{{ $a->name }}</h6>
-                        <div>size: {{ $a->size }}</div>
+                        <form action="{{ url('/cart/add/' ) }}" method="post">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $a->id }}">
+                        <div>Size: <select class="form-select" name="sizes" id="">
+                            <option selected value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XLL</option>
+                        </select></div>
+                        <div>Stock: {{ $a->stock }}</div>
+
                         <p><?php echo 'Rp. ' . $number_format; ?></p>
                         @if (Auth::check())
-                        <a href="{{ url('/cart/add/'.$a->id ) }}" class="site-btn btn-line">ADD TO CART !</a>
+                        <button class="site-btn btn-line">ADD TO CART !</button>
+                        </form>
                         @else
                         <a href="{{ url('/login') }}" class="site-btn btn-line">BUY NOW!</a>
                         @endif

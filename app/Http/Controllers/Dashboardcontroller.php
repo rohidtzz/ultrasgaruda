@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -16,14 +18,14 @@ class DashboardController extends Controller
         return view('dashboard.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function product()
     {
-        //
+
+        $all = Product::all();
+
+        // dd($all);
+
+        return view('dashboard.product',compact('all'));
     }
 
     /**
