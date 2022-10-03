@@ -59,6 +59,8 @@
             <li><a href="{{ route('register') }}">register</a></li> --}}
         </ul>
     </div>
+
+
 </header>
 <!-- Header section end -->
 

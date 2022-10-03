@@ -11,7 +11,6 @@ class Cart extends Model
 
     protected $fillable = [
         'qty',
-        'no_invoice',
         'subtotal',
         'total',
         'user_id',

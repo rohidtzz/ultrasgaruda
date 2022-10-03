@@ -161,9 +161,82 @@ class ProductController extends Controller
      * @param  \App\Models\product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(product $product)
+    public function edit(Request $request)
     {
-        //
+
+        $validator = Validator::make($request->all(), [
+            'name' => ['required'],
+            'price' => ['required'],
+            'stock' => ['required'],
+        ]);
+
+        // dd($validator);
+
+        if($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        // dd($validator);
+
+        $cek = $request->file('image');
+
+        if(!$cek){
+
+            $product = Product::where('id',$request->id)
+                ->update([
+                'name' => $request->name,
+                'price' => $request->price,
+                'stock' => $request->stock,
+                'size' => "S,M,L,XL,XXL",
+                'category_id' => 1,
+            ]);
+
+            // dd($product);
+
+
+
+            if(!$product){
+                return redirect()->back()->withErrors('register failed');
+            }
+
+            return redirect()->back()->with(['success' => 'Registration Success']);
+        }
+
+
+        $this->validate($request, [
+			'image' => 'required|file|image|mimes:jpeg,png,jpg|max:2048'
+		]);
+
+        $file = $request->file('image');
+		$nama_file = $file->getClientOriginalName();
+		$tujuan_upload = 'product/img';
+		$file->move($tujuan_upload,$nama_file);
+
+
+        $product = Product::where('id',$request->id)
+                ->update([
+                'name' => $request->name,
+                'image' => $nama_file,
+                'price' => $request->price,
+                'stock' => $request->stock,
+                'size' => "S,M,L,XL,XXL",
+                'category_id' => 1,
+            ]);
+
+        // dd($product);
+
+
+
+        if(!$product){
+            return redirect()->back()->withErrors('register failed');
+        }
+
+        return redirect()->back()->with(['success' => 'Registration Success']);
+
+
+
     }
 
     /**

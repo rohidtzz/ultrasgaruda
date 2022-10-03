@@ -21,9 +21,13 @@ class CartController extends Controller
 
 
 
+
+
         $total = 0;
         $quan = 0;
         $harga = 0;
+        $totalqty = 0;
+        $qtyto = 0;
 
         // dd($all);
 
@@ -42,6 +46,20 @@ class CartController extends Controller
 
 
         }
+
+        foreach ($all as $m=>$value){
+
+            // $quan +=$value['qty'];
+
+            $qtyto +=$value['qty'];
+
+
+            $totalqty = $qtyto;
+
+        }
+
+
+        // dd($totalqty);
 
 
 
@@ -64,9 +82,12 @@ class CartController extends Controller
         $cart = Cart::where('user_id',$user)->count();
 
 
+
+
         // dd($all);
 
-        return view('welcome.cart',compact('all','cart','total'));
+        return view('welcome.cart',compact('all','cart','total','totalqty'));
+
     }
 
     /**
@@ -219,6 +240,7 @@ class CartController extends Controller
             ->update([
                 'qty' => $cart->qty+1,
                 'total' => $cart->total+$pro->price,
+                'size' => $cart->size
             ]);
 
             return redirect('/cart');
@@ -257,6 +279,8 @@ class CartController extends Controller
             ->update([
                 'qty' => $cart->qty-1,
                 'total' => $cart->total-$pro->price,
+                'size' => $cart->size
+
             ]);
 
 

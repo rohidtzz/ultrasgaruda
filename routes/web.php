@@ -10,6 +10,8 @@ use App\Http\Controllers\ProductController;
 
 use App\Http\Controllers\DashboardController;
 
+use App\Http\Controllers\TransactionController;
+
 use App\Models\Product;
 
 
@@ -56,6 +58,15 @@ Route::group(['middleware' => ['role:admin']], function () {
     //product home
     Route::get('/home/product/delete/{id}', [ProductController::class,'destroyproduct']);
     Route::post('/home/product/create/', [ProductController::class,'create']);
+    Route::post('/home/product/edit', [ProductController::class,'edit']);
+
+    //transaction home
+    Route::get('/home/transaction/side', [DashboardController::class,'transactionside']);
+    Route::get('/home/transaction', [DashboardController::class,'transaction']);
+
+    //transaction
+
+    Route::POST('/transaction', [TransactionController::class,'index']);
 
     //cart
     Route::get('/cart', [CartController::class,'index']);

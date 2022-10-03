@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Transaction;
+
+use DataTables;
 
 use Illuminate\Http\Request;
 
@@ -32,6 +35,34 @@ class DashboardController extends Controller
         // dd($all);
 
         return view('dashboard.product',compact('all'));
+    }
+
+    public function transactionside()
+    {
+
+        $id = Auth()->user()->id;
+
+        $all = Transaction::all();
+
+
+        return DataTables::of($all)->make(true);
+
+        // return view('dashboard.transaction',compact('all'));
+    }
+
+    public function transaction()
+    {
+
+        $id = Auth()->user()->id;
+
+        $all = Transaction::all();
+
+
+        // return DataTables::of($all)->make(true);
+
+         return view('dashboard.transaction',compact('all'));
+
+        // return view('dashboard.transaction');
     }
 
 

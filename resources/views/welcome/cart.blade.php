@@ -226,12 +226,24 @@ a:hover{
                 <p>GIVE CODE</p>
                 <input id="code" placeholder="Enter your code">
             </form> --}}
+
             <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                 <div class="col">TOTAL PRICE</div>
                 <div class="col text-right">&nbsp; Rp.
                 {{ number_format($total)  }}</div>
             </div>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" >CHECKOUT</button>
+
+            <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+                <div class="col">TOTAL Qty</div>
+                <div class="col text-right">
+                {{ $totalqty  }}</div>
+            </div>
+            <form action="{{ url('/transaction') }}" method="POST">
+                @csrf
+                <input type="hidden" name="total" value="{{ $total }}">
+                <input type="hidden" name="totalqty" value="{{ $totalqty }}">
+            <button type="submit" class="btn btn-primary" onclick="return confirm('are you sure?')" >CHECKOUT</button>
+            </form>
         </div>
     </div>
 
