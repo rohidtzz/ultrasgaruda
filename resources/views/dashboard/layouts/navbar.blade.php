@@ -5,19 +5,23 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
             <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-            <li class="breadcrumb-item text-sm text-white active" aria-current="page">
+            <a href="{{Request::is('home/transaction/search') ? "/home/transaction" : ''}}" class="breadcrumb-item text-sm text-white active" aria-current="page">
+
                 {{Request::is('home') ? 'Dashboard' : ''}}
                 {{Request::is('home/product') ? 'Product' : ''}}
                 {{Request::is('home/transaction') ? 'Transaction' : ''}}
+                {{Request::is('home/transaction/search') ? 'Transaction' : ''}}
 
 
 
-            </li>
+            </a>
           </ol>
-          <h6 class="font-weight-bolder text-white mb-0">
+          <h6 href="#" class="font-weight-bolder text-white mb-0">
+
             {{Request::is('home') ? 'Dashboard' : ''}}
             {{Request::is('home/product') ? 'Product' : ''}}
             {{Request::is('home/transaction') ? 'Transaction' : ''}}
+            {{Request::is('home/transaction/search') ? 'Search' : ''}}
 
 
           </h6>
