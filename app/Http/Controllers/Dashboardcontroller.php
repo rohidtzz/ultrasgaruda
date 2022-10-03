@@ -55,7 +55,7 @@ class DashboardController extends Controller
 
         $id = Auth()->user()->id;
 
-        $all = Transaction::all();
+        $all = Transaction::paginate(10);
 
 
         // return DataTables::of($all)->make(true);

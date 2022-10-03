@@ -63,9 +63,9 @@ Route::group(['middleware' => ['role:admin']], function () {
     //transaction home
     Route::get('/home/transaction/side', [DashboardController::class,'transactionside']);
     Route::get('/home/transaction', [DashboardController::class,'transaction']);
+    Route::post('/home/transaction/search', [TransactionController::class,'search']);
 
     //transaction
-
     Route::POST('/transaction', [TransactionController::class,'index']);
 
     //cart
@@ -83,8 +83,12 @@ Route::group(['middleware' => ['role:admin,kordinator']], function () {
     Route::get('/home', [DashboardController::class,'index'])->name('kordinator');
     Route::get('/home/product', [DashboardController::class,'product']);
 
-    //product home
-    Route::post('/home/product/create/', [ProductController::class,'create']);
+    //transaction
+    Route::POST('/transaction', [TransactionController::class,'index']);
+
+    //Transaction home
+    Route::get('/home/transaction/side', [DashboardController::class,'transactionside']);
+    Route::get('/home/transaction', [DashboardController::class,'transaction']);
 
     //cart
     Route::get('/cart', [CartController::class,'index']);
@@ -100,7 +104,14 @@ Route::group(['middleware' => ['role:admin,kordinator,user']], function () {
 
     //dashboard
     Route::get('/home', [DashboardController::class,'index'])->name('kordinator');
-    Route::get('/home/product', [DashboardController::class,'product']);
+    // Route::get('/home/product', [DashboardController::class,'product']);
+
+    //transaction
+    Route::POST('/transaction', [TransactionController::class,'index']);
+
+    //Transaction home
+    // Route::get('/home/transaction/side', [DashboardController::class,'transactionside']);
+    Route::get('/home/transaction', [DashboardController::class,'transaction']);
 
     //cart
     Route::get('/cart', [CartController::class,'index']);
@@ -108,6 +119,8 @@ Route::group(['middleware' => ['role:admin,kordinator,user']], function () {
     Route::get('/cart/qty/up/{id}', [CartController::class,'plusqty']);
     Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
     Route::get('/cart/destroy/{id}', [CartController::class,'destroy']);
+
+
 
 });
 

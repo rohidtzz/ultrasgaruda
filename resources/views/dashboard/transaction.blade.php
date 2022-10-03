@@ -6,20 +6,33 @@
 <div class="container-fluid py-4">
     <div class="row">
       <div class="col-12">
-        <div class="card mb-4">
-          <div class="card-header pb-0">
-            <h3>Transaction table</h3>
-            {{-- <button style="width: 100px; height:40px" class="btn btn-primary">Create</button> --}}
+        <div class="card">
+        <div class="card-header pb-0">
+            <div class="d-flex align-items-center">
+              <h3 class="mb-0">Transaction Table</h3>
+              <div class="justify-content-end ms-auto ">
+                <form class="" action="{{ url('/home/transaction/search') }}" method="post">
+                <div class="input-group">
+
+                  <span style="height: 50px" class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
 
 
+                        @csrf
+                        <input name="search" style="height: 50px" type="text" class="form-control" placeholder="Type here...">
+                        <button type="submit" style="height: 50px" class=" btn btn-primary">Search</button>
 
+                </div>
 
-
-
-
+            </div>
+        </form>
+            </div>
           </div>
+          <br>
           <div class="card-body px-0 pt-0 pb-2">
             <div class="table-responsive p-0">
+
+
+
               <table class="table align-items-center mb-0">
                 <thead>
                   <tr>
@@ -140,7 +153,22 @@
 
 
                   </tr>
+
                 @endforeach
+
+
+
+                {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet"> --}}
+
+
+                {{-- <style type="text/css">
+                    .pagination li{
+                        float: left;
+                        list-style-type: none;
+                        margin:5px;
+                    }
+                </style> --}}
+
                     {{-- <td>
                       <div class="d-flex px-2 py-1">
                         <div>
@@ -281,7 +309,19 @@
                     </td>
                   </tr> --}}
                 </tbody>
+
               </table>
+              {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet"> --}}
+
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end">
+                    {{ $all->links() }}
+                </ul>
+              </nav>
+
+
+              {{-- {{ $all->links() }} --}}
+
             </div>
           </div>
         </div>

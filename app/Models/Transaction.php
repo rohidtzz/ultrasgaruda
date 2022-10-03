@@ -28,7 +28,7 @@ class Transaction extends Model
         return [
             'no_invoice' => [
                 'format' => function () {
-                    return date('d-m-y') . '/TGR/INV/?';
+                    return date('dmy') . '/TGR/INV/?';
                 },
                 'length' => 5
             ]
@@ -36,9 +36,9 @@ class Transaction extends Model
     }
 
 
-    public function product(){
-        return $this->hasMany(Product::class,'id');
-    }
+    // public function product(){
+    //     return $this->hasMany(Product::class,'id');
+    // }
 
 
 

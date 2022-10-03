@@ -19,6 +19,7 @@
             <span class="nav-link-text ms-1">Dashboard</span>
           </a>
         </li>
+        @if (Auth()->user()->role != "user")
         <li class="nav-item">
           <a class="nav-link {{Request::is('home/product') ? 'active' : ''}} " href="{{ url('/home/product') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -27,6 +28,8 @@
             <span class="nav-link-text ms-1">Product</span>
           </a>
         </li>
+        @endif
+
         <li class="nav-item">
           <a class="nav-link {{Request::is('home/transaction') ? 'active' : ''}}" href="{{ url('home/transaction') }}">
             <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">

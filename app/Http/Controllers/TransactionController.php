@@ -104,9 +104,27 @@ class TransactionController extends Controller
             'user_id' => $id,
         ]);
 
+        $caro = Cart::where('user_id',$id)->get();
+
+        $caro->each->delete();
+        // dd($caro->destroy());
+
 
 
         return redirect('/home/transaction');
+
+    }
+
+    public function search(Request $request)
+    {
+
+        $search = $request->search;
+
+        $all = Transaction::where('no_invoice','like','%'.$search.'%')->paginate(10);
+
+
+        return view('dashboard.transaction',compact('all'));
+
 
     }
 

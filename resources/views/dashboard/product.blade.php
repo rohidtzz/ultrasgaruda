@@ -7,9 +7,81 @@
     <div class="row">
       <div class="col-12">
         <div class="card mb-4">
-          <div class="card-header pb-0">
+
+            <div class="card-header pb-0">
+                <div class="d-flex align-items-center">
+                  <h3 class="mb-0">Products Table</h3>
+                  <div class="justify-content-end ms-auto ">
+                    <div class="input-group">
+                      {{-- <span style="height: 50px" class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span> --}}
+
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Create Product
+                      </button>
+                      {{-- <input style="height: 50px" type="text" class="form-control" placeholder="Type here..."> --}}
+
+                      {{-- <button type="submit" style="height: 50px" class=" btn btn-primary">Search</button> --}}
+                    </div>
+                </div>
+                </div>
+              </div>
+              <br>
+
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Modal Create Product</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="{{ url('/home/product/create') }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="mb-3">
+                              <label for="exampleInputEmail1" class="form-label">Name</label>
+                              <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                              <div id="emailHelp" class="form-text"></div>
+                            </div>
+                            <div class="mb-3">
+                              <label for="exampleInputPassword1" class="form-label">img</label>
+                              <input type="file" name="image" class="form-control" id="exampleInputPassword1">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Price</label>
+                                <input type="number" name="price" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                                <div id="emailHelp" class="form-text"></div>
+                              </div>
+                              <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Stock</label>
+                                <input type="number" name="stock" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                                <div id="emailHelp" class="form-text"></div>
+                              </div>
+                              <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Size</label>
+                                <input type="text" name="size" value="S,M,L,XL,XXL" class="form-control"  aria-describedby="emailHelp" disabled>
+                                <div id="emailHelp" class="form-text"></div>
+                              </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+          {{-- <div class="card-header pb-0">
             <h3>Product table</h3>
-            {{-- <button style="width: 100px; height:40px" class="btn btn-primary">Create</button> --}}
+            <button style="width: 100px; height:40px" class="btn btn-primary">Create</button>
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Create Product
               </button>
@@ -50,7 +122,7 @@
                                 <div id="emailHelp" class="form-text"></div>
                               </div>
 
-                            {{-- <button type="submit" class="btn btn-primary">Submit</button> --}}
+                            <button type="submit" class="btn btn-primary">Submit</button>
 
                     </div>
                     <div class="modal-footer">
@@ -70,7 +142,7 @@
 
 
 
-          </div>
+          </div> --}}
           <div class="card-body px-0 pt-0 pb-2">
             <div class="table-responsive p-0">
               <table class="table align-items-center mb-0">
