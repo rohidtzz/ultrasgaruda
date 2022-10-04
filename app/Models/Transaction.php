@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 use Alfa6661\AutoNumber\AutoNumberTrait;
 
 class Transaction extends Model
@@ -19,7 +18,11 @@ class Transaction extends Model
         'total',
         'user_id',
         'data',
-        'status'
+        'status',
+        'nama_pengirim',
+        'bukti_image',
+        'no_rek',
+        'nama_bank'
     ];
 
 
@@ -34,13 +37,4 @@ class Transaction extends Model
             ]
         ];
     }
-
-
-    // public function product(){
-    //     return $this->hasMany(Product::class,'id');
-    // }
-
-
-
-
 }

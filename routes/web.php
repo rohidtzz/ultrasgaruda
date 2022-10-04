@@ -65,6 +65,16 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::get('/home/transaction', [DashboardController::class,'transaction']);
     Route::post('/home/transaction/search', [TransactionController::class,'search']);
 
+    Route::post('/home/transaction/detail/post', [TransactionController::class,'transactiondetail']);
+
+    //reject
+    Route::get('/home/transaction/reject/{id}', [TransactionController::class,'reject']);
+    //accept
+    Route::get('/home/transaction/accept/{id}', [TransactionController::class,'accept']);
+    //cancel
+    Route::get('/home/transaction/cancel/{id}', [TransactionController::class,'cancel']);
+
+
     //transaction
     Route::POST('/transaction', [TransactionController::class,'index']);
 
@@ -83,12 +93,31 @@ Route::group(['middleware' => ['role:admin,kordinator']], function () {
     Route::get('/home', [DashboardController::class,'index'])->name('kordinator');
     Route::get('/home/product', [DashboardController::class,'product']);
 
+    //product home
+    Route::get('/home/product/delete/{id}', [ProductController::class,'destroyproduct']);
+    Route::post('/home/product/create/', [ProductController::class,'create']);
+    Route::post('/home/product/edit', [ProductController::class,'edit']);
+
     //transaction
     Route::POST('/transaction', [TransactionController::class,'index']);
+
+    Route::post('/home/transaction/detail/post', [TransactionController::class,'transactiondetail']);
 
     //Transaction home
     Route::get('/home/transaction/side', [DashboardController::class,'transactionside']);
     Route::get('/home/transaction', [DashboardController::class,'transaction']);
+    Route::post('/home/transaction/search', [TransactionController::class,'search']);
+
+
+    //reject
+    Route::get('/home/transaction/reject/{id}', [TransactionController::class,'reject']);
+    //accept
+    Route::get('/home/transaction/accept/{id}', [TransactionController::class,'accept']);
+    //cancel
+    Route::get('/home/transaction/cancel/{id}', [TransactionController::class,'cancel']);
+
+
+
 
     //cart
     Route::get('/cart', [CartController::class,'index']);
@@ -112,6 +141,11 @@ Route::group(['middleware' => ['role:admin,kordinator,user']], function () {
     //Transaction home
     // Route::get('/home/transaction/side', [DashboardController::class,'transactionside']);
     Route::get('/home/transaction', [DashboardController::class,'transaction']);
+
+    //cancel
+    Route::get('/home/transaction/cancel/{id}', [TransactionController::class,'cancel']);
+
+    Route::post('/home/transaction/detail/post', [TransactionController::class,'transactiondetail']);
 
     //cart
     Route::get('/cart', [CartController::class,'index']);

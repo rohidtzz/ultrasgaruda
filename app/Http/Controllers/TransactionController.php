@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\DetailTransaction;
 use Illuminate\Http\Request;
+
+use Validator;
 
 
 class TransactionController extends Controller
@@ -104,6 +107,8 @@ class TransactionController extends Controller
             'user_id' => $id,
         ]);
 
+
+
         $caro = Cart::where('user_id',$id)->get();
 
         $caro->each->delete();
@@ -126,6 +131,101 @@ class TransactionController extends Controller
         return view('dashboard.transaction',compact('all'));
 
 
+    }
+
+
+    public function transactiondetail(Request $request)
+    {
+
+
+        $validator = Validator::make($request->all(), [
+            'nama_pengirim' => ['required'],
+            'nama_bank' => ['required'],
+            'no_rek' => ['required'],
+        ]);
+
+        // dd($validator);
+
+        if($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+
+        $this->validate($request, [
+			'bukti_image' => 'required|file|image|mimes:jpeg,png,jpg|max:2048'
+		]);
+
+        $file = $request->file('bukti_image');
+		$nama_file = $file->getClientOriginalName();
+		$tujuan_upload = 'trans/img';
+		$file->move($tujuan_upload,$nama_file);
+
+
+        $product = Transaction::where('id',$request->id)
+        ->update([
+            'nama_pengirim' => $request->nama_pengirim,
+            'no_rek' => $request->no_rek,
+            'bukti_image' => $nama_file,
+            'nama_bank' => $request->nama_bank,
+            'status' => 'validation'
+        ]);
+
+        // dd($product);
+
+
+
+
+
+        if(!$product){
+            return redirect()->back()->withErrors('register failed');
+        }
+
+        return redirect()->back()->with(['success' => 'Registration Success']);
+
+
+        // return view('dashboard.transaction',compact('all'));
+
+
+    }
+
+
+    public function accept($id)
+    {
+
+        $trans = Transaction::where('id',$id)
+                ->update([
+                    'status' => 'payment successful'
+                ]);
+
+
+
+
+        return redirect()->back();
+    }
+
+    public function reject($id)
+    {
+
+        $trans = Transaction::where('id',$id)
+        ->update([
+            'status' => 'reject'
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function cancel($id)
+    {
+        $trans = Transaction::where('id',$id)
+                ->update([
+                    'status' => 'cancel'
+                ]);
+
+                // dd($trans);
+
+        return redirect()->back();
     }
 
     /**

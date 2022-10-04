@@ -55,7 +55,15 @@ class DashboardController extends Controller
 
         $id = Auth()->user()->id;
 
-        $all = Transaction::paginate(10);
+
+
+        if(Auth()->user()->role == "admin"){
+            $all = Transaction::orderBy('created_at',"desc")->paginate(10);
+        }elseif(Auth()->user()->role == "kordinator"){
+            $all = Transaction::orderBy('created_at',"desc")->paginate(10);
+        }elseif(Auth()->user()->role == "user"){
+            $all = Transaction::where('user_id',$id)->orderBy('created_at',"desc")->paginate(10);
+        }
 
 
         // return DataTables::of($all)->make(true);

@@ -11,6 +11,9 @@
             <div class="d-flex align-items-center">
               <h3 class="mb-0">Transaction Table</h3>
               <div class="justify-content-end ms-auto ">
+                @if (Auth()->user()->role =="admin" || Auth()->user()->role =="kordinator")
+
+
                 <form class="" action="{{ url('/home/transaction/search') }}" method="post">
                 <div class="input-group">
 
@@ -23,8 +26,9 @@
 
                 </div>
 
-            </div>
-        </form>
+                </div>
+            </form>
+            @endif
             </div>
           </div>
           <br>
@@ -142,19 +146,170 @@
                         Accept
                       </a> --}}
 
+
+                      @if (Auth()->user()->role == "admin" || Auth()->user()->role == "kordinator")
+
+                      {{-- @if ($a->status == "unpaid") --}}
+                      @if($a->nama_pengirim)
+                      <a type="button" data-id="{{$a->id}}" style="padding-left:10px;" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleModa-{{ $a->id }}" >
+                        Detail
+                      </a>
+
+                      @endif
+
+                      @if($a->status == "validation")
+                      <a type="button" onclick="return confirm('are you sure?')" href="{{ url('/home/transaction/accept/'.$a->id) }}" style="padding-left:10px;" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" >
+                        Accept
+                      </a>
+
+                      <a style="padding-left:10px;"  onclick="return confirm('are you sure?')" href="{{ url('/home/transaction/reject/'.$a->id) }}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        Reject
+                      </a>
+                      @endif
+
+                      @if($a->status == "reject")
+                      <a type="button" data-id="{{$a->id}}" style="padding-left:10px;" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleModa-{{ $a->id }}" >
+                        Detail
+                      </a>
+                      @endif
+
+
+
+
+
+
+
+
+
+
+
+                      @elseif (Auth()->user()->role == "user")
+
+                      @if ($a->status == "unpaid")
                       <a type="button" data-id="{{$a->id}}"  style="padding-left:10px;" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleModa-{{ $a->id }}" >
                         Detail
                       </a>
 
-                      <a style="padding-left:10px;"  onclick="return confirm('are you sure?')" href="{{ url('/home/product/delete/'.$a->id) }}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                        Reject
+                      <a style="padding-left:10px;"  onclick="return confirm('are you sure?')" href="{{ url('/home/transaction/cancel/'.$a->id) }}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        Cancel
                       </a>
+                      @endif
+
+                      @if ($a->status == "validation")
+                      <a type="button" data-id="{{$a->id}}" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleModa-{{ $a->id }}" >
+                        Detail
+                      </a>
+                      @endif
+
+                      @if ($a->status == "payment successful")
+                      <a type="button" data-id="{{$a->id}}" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleModa-{{ $a->id }}" >
+                        Detail
+                      </a>
+                      @endif
+
+
+
+
+
+
+
+
+                      @endif
                     </td>
 
 
                   </tr>
+                  <div class="modal fade" id="exampleModa-{{ $a->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Modal Detail Transaction</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        @if($a->nama_pengirim)
+                        <div class="modal-body">
+                                <span>Pembayaran Anda Sedang Divalidasi</span><br>
+                                <span>Contact Person jika ada kendala: 089612121703 (rohid) </span>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Atas nama Bank Pengirim</label>
+                                    <input type="text" name="nama_bank" value="{{ $a->nama_bank }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"disabled>
+                                    <div id="emailHelp" class="form-text"></div>
+                                  </div>
+
+                                <div class="mb-3">
+                                  <label for="exampleInputEmail1" class="form-label">Atas nama Bank Pengirim</label>
+                                  <input type="text" name="nama_pengirim" value="{{ $a->nama_pengirim }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"disabled>
+                                  <div id="emailHelp" class="form-text"></div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">NO Rek Bank Pengirim</label>
+                                    <input type="number" name="no_rek" value="{{ $a->no_rek }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled>
+                                    <div id="emailHelp" class="form-text"></div>
+                                </div>
+
+                                <div class="mb-3">
+                                  <label for="exampleInputPassword1" class="form-label">Bukti Transfer</label>
+                                  <picture>
+                                    <source srcset="{{ asset('trans/img/'.$a->bukti_image) }}" type="image/svg+xml">
+                                    <img src="{{ asset('trans/img/'.$a->bukti_image) }}" class="img-fluid img-thumbnail" alt="...">
+                                  </picture>
+                                  {{-- <img src="{{ asset('trans/img/'.$a->bukti_image) }}" wi alt=""> --}}
+                                </div>
+                        </div>
+                        @else
+                        <div class="modal-body">
+                            <form method="POST" action="{{ url('/home/transaction/detail/post') }}" enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $a->id }}">
+                                <span> Transfer ke Rekening BCA:</span><br>
+                                <span>BCA: 252529179 | A/n Rohid ammar firdaus </span>
+                                <p>Isi Form Di bawah ini berserta Bukti Transfer </p>
+                                <p>Jumlah Yang Harus dibayar Rp. {{ number_format($a->total) }}</p>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">nama Bank Pengirim</label>
+                                    <input type="text" name="nama_bank" value="" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                                    <div id="emailHelp" class="form-text"></div>
+                                  </div>
+
+                                <div class="mb-3">
+                                  <label for="exampleInputEmail1" class="form-label">Atas nama Bank Pengirim</label>
+                                  <input type="text" name="nama_pengirim" value="" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                                  <div id="emailHelp" class="form-text"></div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">NO Rek Bank Pengirim</label>
+                                    <input type="number" name="no_rek" value="" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                                    <div id="emailHelp" class="form-text"></div>
+                                </div>
+
+                                <div class="mb-3">
+                                  <label for="exampleInputPassword1" class="form-label">Bukti Transfer</label>
+                                  <input type="file" name="bukti_image" class="form-control" id="exampleInputPassword1">
+                                </div>
+                        </div>
+                        @endif
+
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          @if ($a->nama_pengirim)
+
+                          @else
+                          <button type="submit" class="btn btn-primary">Submit Payment</button>
+                          @endif
+
+                        </div>
+                    </form>
+                      </div>
+                    </div>
+                  </div>
 
                 @endforeach
+
+
 
 
 
