@@ -6,6 +6,8 @@ use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Http;
+
 class CartController extends Controller
 {
     /**
@@ -83,10 +85,10 @@ class CartController extends Controller
 
 
 
-
+        $provinsi = $this->get_province();
         // dd($all);
 
-        return view('welcome.cart',compact('all','cart','total','totalqty'));
+        return view('welcome.cart',compact('all','cart','total','totalqty','provinsi'));
 
     }
 
@@ -297,16 +299,127 @@ class CartController extends Controller
 
     }
 
+
+    public function cost(){
+        $response = Http::withHeaders([
+            'key' => '1d0baea46ae6872a997da365cbfb4046',
+            'X-Second' => 'bar'
+        ])->post('https://api.rajaongkir.com/starter/city', [
+            'name' => 'Taylor',
+        ]);
+    }
+
+
+    public function get_ongkir($origin, $destination, $weight, $courier){
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.rajaongkir.com/starter/cost",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "POST",
+        CURLOPT_POSTFIELDS => "origin=$origin&destination=$destination&weight=$weight&courier=$courier",
+        CURLOPT_HTTPHEADER => array(
+        "content-type: application/x-www-form-urlencoded",
+        "key: 1d0baea46ae6872a997da365cbfb4046"
+        ),
+        ));
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            $response=json_decode($response,true);
+            $data_ongkir = $response['rajaongkir']['results'];
+            return json_encode($data_ongkir);
+        }
+
+        // if ($err) {
+        // echo "cURL Error #:" . $err;
+        // } else {
+        // echo $response;
+        // }
+
+    }
+
+    public function get_province(){
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.rajaongkir.com/starter/province",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+            "key: 1d0baea46ae6872a997da365cbfb4046"
+        ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+            } else {
+            //ini kita decode data nya terlebih dahulu
+            $response=json_decode($response,true);
+            //ini untuk mengambil data provinsi yang ada di dalam rajaongkir resul
+            $data_pengirim = $response['rajaongkir']['results'];
+            return $data_pengirim;
+            }
+
+    }
+    public function get_city($id){
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => "https://api.rajaongkir.com/starter/city?&province=$id",
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => "",
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 30,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => "GET",
+        CURLOPT_HTTPHEADER => array(
+            "key: 1d0baea46ae6872a997da365cbfb4046"
+        ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+            } else {
+            $response=json_decode($response,true);
+            $data_kota = $response['rajaongkir']['results'];
+            return json_encode($data_kota);
+            }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
+    // public function store(Request $request)
+    // {
+    //     //
+    // }
 
     /**
      * Display the specified resource.

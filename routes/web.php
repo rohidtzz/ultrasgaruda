@@ -85,12 +85,20 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
     Route::get('/cart/destroy/{id}', [CartController::class,'destroy']);
 
+    Route::get('/cek', [CartController::class,'cost']);
+
+
+    //ongkir
+    Route::get('/origin={city_origin}&destination={city_destination}&weight={weight}&courier={courier}',[CartController::class, 'get_ongkir']);
+    Route::get('province',[CartController::class, 'get_province'])->name('province');
+    Route::get('/kota/{id}',[CartController::class, 'get_city']);
+
 });
 
 Route::group(['middleware' => ['role:admin,kordinator']], function () {
 
     //dashboard
-    Route::get('/home', [DashboardController::class,'index'])->name('kordinator');
+    Route::get('/home', [DashboardController::class,'index'])->name('admin');
     Route::get('/home/product', [DashboardController::class,'product']);
 
     //product home
@@ -98,16 +106,12 @@ Route::group(['middleware' => ['role:admin,kordinator']], function () {
     Route::post('/home/product/create/', [ProductController::class,'create']);
     Route::post('/home/product/edit', [ProductController::class,'edit']);
 
-    //transaction
-    Route::POST('/transaction', [TransactionController::class,'index']);
-
-    Route::post('/home/transaction/detail/post', [TransactionController::class,'transactiondetail']);
-
-    //Transaction home
+    //transaction home
     Route::get('/home/transaction/side', [DashboardController::class,'transactionside']);
     Route::get('/home/transaction', [DashboardController::class,'transaction']);
     Route::post('/home/transaction/search', [TransactionController::class,'search']);
 
+    Route::post('/home/transaction/detail/post', [TransactionController::class,'transactiondetail']);
 
     //reject
     Route::get('/home/transaction/reject/{id}', [TransactionController::class,'reject']);
@@ -117,7 +121,8 @@ Route::group(['middleware' => ['role:admin,kordinator']], function () {
     Route::get('/home/transaction/cancel/{id}', [TransactionController::class,'cancel']);
 
 
-
+    //transaction
+    Route::POST('/transaction', [TransactionController::class,'index']);
 
     //cart
     Route::get('/cart', [CartController::class,'index']);
@@ -125,6 +130,15 @@ Route::group(['middleware' => ['role:admin,kordinator']], function () {
     Route::get('/cart/qty/up/{id}', [CartController::class,'plusqty']);
     Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
     Route::get('/cart/destroy/{id}', [CartController::class,'destroy']);
+
+    Route::get('/cek', [CartController::class,'cost']);
+
+
+    //ongkir
+    Route::get('/origin={city_origin}&destination={city_destination}&weight={weight}&courier={courier}',[CartController::class, 'get_ongkir']);
+    Route::get('province',[CartController::class, 'get_province'])->name('province');
+    Route::get('/kota/{id}',[CartController::class, 'get_city']);
+
 
 
 });
@@ -153,6 +167,12 @@ Route::group(['middleware' => ['role:admin,kordinator,user']], function () {
     Route::get('/cart/qty/up/{id}', [CartController::class,'plusqty']);
     Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
     Route::get('/cart/destroy/{id}', [CartController::class,'destroy']);
+
+
+    //ongkir
+    Route::get('/origin={city_origin}&destination={city_destination}&weight={weight}&courier={courier}',[CartController::class, 'get_ongkir']);
+    Route::get('province',[CartController::class, 'get_province'])->name('province');
+    Route::get('/kota/{id}',[CartController::class, 'get_city']);
 
 
 
