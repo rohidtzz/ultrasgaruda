@@ -258,7 +258,7 @@ a:hover{
 
 <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
-        <form name="frm_edit" id="frm_edit" class="form-horizontal" action="{{url('transaction')}}" method="POST" enctype="multipart/form-data">
+        <form  class="form-horizontal" action="{{url('/cek')}}" method="POST" enctype="multipart/form-data">
             @csrf
       <div class="modal-content">
         <div class="modal-header">
@@ -414,7 +414,7 @@ $.each(value.costs, function(key1, value1){
 // ini untuk looping cost nya masing masing
 // silahkan pelajari cara menampilkan data json agar lebi paham
 $.each(value1.cost, function(key2, value2){
-$('select[name="layanan"]').append('<option value="'+ key +'">' + value1.service + '-' + value1.description + '-' +value2.value+ '</option>');
+$('select[name="layanan"]').append('<option value="'+ value2.value +'">' + value1.service + '-' + value1.description + '-' +value2.value+ '</option>');
 });
 });
 });

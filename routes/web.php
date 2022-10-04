@@ -85,7 +85,6 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
     Route::get('/cart/destroy/{id}', [CartController::class,'destroy']);
 
-    Route::get('/cek', [CartController::class,'cost']);
 
 
     //ongkir
@@ -131,7 +130,7 @@ Route::group(['middleware' => ['role:admin,kordinator']], function () {
     Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
     Route::get('/cart/destroy/{id}', [CartController::class,'destroy']);
 
-    Route::get('/cek', [CartController::class,'cost']);
+
 
 
     //ongkir
@@ -168,6 +167,7 @@ Route::group(['middleware' => ['role:admin,kordinator,user']], function () {
     Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
     Route::get('/cart/destroy/{id}', [CartController::class,'destroy']);
 
+    Route::post('/cek', [CartController::class,'cost']);
 
     //ongkir
     Route::get('/origin={city_origin}&destination={city_destination}&weight={weight}&courier={courier}',[CartController::class, 'get_ongkir']);

@@ -300,13 +300,16 @@ class CartController extends Controller
     }
 
 
-    public function cost(){
-        $response = Http::withHeaders([
-            'key' => '1d0baea46ae6872a997da365cbfb4046',
-            'X-Second' => 'bar'
-        ])->post('https://api.rajaongkir.com/starter/city', [
-            'name' => 'Taylor',
-        ]);
+    public function cost(Request $request){
+        // $response = Http::withHeaders([
+        //     'key' => '1d0baea46ae6872a997da365cbfb4046',
+        //     'X-Second' => 'bar'
+        // ])->post('https://api.rajaongkir.com/starter/city', [
+        //     'name' => 'Taylor',
+        // ]);
+
+            dd($request->all());
+
     }
 
 
