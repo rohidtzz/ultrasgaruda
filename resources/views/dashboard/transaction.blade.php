@@ -44,10 +44,10 @@
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">No invoice</th>
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Total</th>
-                    <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Size</th>
-                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Qty</th>
+                    <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Shipping</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">users</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product</th>
+                    <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Payment</th>
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
 
                     {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employed</th> --}}
@@ -90,56 +90,77 @@
                     <td>
                       <p class="text-xs font-weight-bold mb-0 text-center">Rp.{{ number_format($a->total) }}</p>
                     </td>
-                    <td>
+                    {{-- <td>
                         <p class="text-xs text-center font-weight-bold mb-0">
                             @foreach (json_decode($a->data) as $dat=>$value)
-                            {{-- {{dd(json_encode($value->id))}} --}}
-                                {{-- {{ $value->id }} --}}
-                               {{-- <span>Qty: </span> {{ $value->qty }} <br> --}}
 
-
-
-                                {{-- <span>Size: </span>{{ $value->size }},
-                                <br> --}}
                                 {{$value->size}}
 
-                                {{-- <br> --}}
-                                {{-- @foreach ($value as $kim )
-                                    {{ dd($kim) }}
-                                @endforeach --}}
+
                             @endforeach</p>
-                      </td>
+                      </td> --}}
                     <td class="align-middle text-center text-sm">
-                      <span class="">{{ $a->qty }}</span>
+                      <span class="">
+                        @if ($a->shipping)
+                        <a type="button" data-id="{{$a->id}}" style="padding-left:10px;" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleM-{{ $a->id }}" >
+                            Detail shipping
+                          </a>
+
+                          @else
+
+                          <p>ke lokasi ug</p>
+
+                        @endif
+                      </span>
                     </td>
                     <td class="align-middle text-center text-sm">
                         <span class="">{{ App\Models\User::find($a->user_id)->name }}</span>
                       </td>
 
                       <td class="align-middle text-center text-sm">
-                        <span class="">
+                        {{-- <span class="">
                             @foreach (json_decode($a->data) as $dat=>$value)
-                            {{-- {{dd(json_encode($value->id))}} --}}
-                                {{-- {{ $value->id }} --}}
-                               {{-- <span>Qty: </span> {{ $value->qty }} <br> --}}
 
-
-
-                                {{-- <span>Size: </span>{{ $value->size }},
-                                <br> --}}
-                                {{App\Models\Product::find($value->product_id)->name }}
-                                {{$value->qty}} |
-
-                                {{-- <br> --}}
-                                {{-- @foreach ($value as $kim )
-                                    {{ dd($kim) }}
-                                @endforeach --}}
                             @endforeach
 
 
 
+                        </span> --}}
+
+                        <span>
+                            <a type="button" data-id="{{$a->id}}" style="padding-left:10px;" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleMo-{{ $a->id }}" >
+                                Detail Product
+                              </a>
                         </span>
                       </td>
+                      <td class="text-center align-middle">
+
+                     @if (Auth()->user()->role == "admin" || Auth()->user()->role == "kordinator")
+
+                      {{-- @if ($a->status == "unpaid") --}}
+                      @if($a->paytrans)
+                      <a type="button" data-id="{{$a->id}}" style="padding-left:10px;" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleModa-{{ $a->id }}" >
+                        Detail
+                      </a>
+
+                      @endif
+
+
+
+
+
+                      @elseif (Auth()->user()->role == "user")
+
+                      @if ($a->status == "unpaid")
+                      <a type="button" data-id="{{$a->id}}"  style="padding-left:10px;" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleModa-{{ $a->id }}" >
+                        Payment
+                      </a>
+                      @endif
+
+                      @endif
+
+                      </td>
+
 
                     <td class="text-center align-middle">
                       {{-- <a type="button" data-id="{{$a->id}}"  class="text-primary font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleModa-{{ $a->id }}" >
@@ -149,29 +170,28 @@
 
                       @if (Auth()->user()->role == "admin" || Auth()->user()->role == "kordinator")
 
-                      {{-- @if ($a->status == "unpaid") --}}
-                      @if($a->nama_pengirim)
-                      <a type="button" data-id="{{$a->id}}" style="padding-left:10px;" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleModa-{{ $a->id }}" >
-                        Detail
+                      @if ($a->status == "unpaid")
+                      <a style="padding-left:10px;"  onclick="return confirm('are you sure?')" href="{{ url('/home/transaction/reject/'.$a->id) }}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                        Reject
                       </a>
-
                       @endif
 
+
                       @if($a->status == "validation")
-                      <a type="button" onclick="return confirm('are you sure?')" href="{{ url('/home/transaction/accept/'.$a->id) }}" style="padding-left:10px;" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" >
-                        Accept
-                      </a>
+                        <a type="button" onclick="return confirm('are you sure?')" href="{{ url('/home/transaction/accept/'.$a->id) }}" style="padding-left:10px;" class="text-info font-weight-bold text-xs">
+                            Accept
+                        </a>
 
                       <a style="padding-left:10px;"  onclick="return confirm('are you sure?')" href="{{ url('/home/transaction/reject/'.$a->id) }}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                         Reject
                       </a>
                       @endif
 
-                      @if($a->status == "reject")
+                      {{-- @if($a->status == "reject")
                       <a type="button" data-id="{{$a->id}}" style="padding-left:10px;" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleModa-{{ $a->id }}" >
                         Detail
                       </a>
-                      @endif
+                      @endif --}}
 
 
 
@@ -186,26 +206,13 @@
                       @elseif (Auth()->user()->role == "user")
 
                       @if ($a->status == "unpaid")
-                      <a type="button" data-id="{{$a->id}}"  style="padding-left:10px;" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleModa-{{ $a->id }}" >
-                        Detail
-                      </a>
 
                       <a style="padding-left:10px;"  onclick="return confirm('are you sure?')" href="{{ url('/home/transaction/cancel/'.$a->id) }}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                         Cancel
                       </a>
                       @endif
 
-                      @if ($a->status == "validation")
-                      <a type="button" data-id="{{$a->id}}" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleModa-{{ $a->id }}" >
-                        Detail
-                      </a>
-                      @endif
 
-                      @if ($a->status == "payment successful")
-                      <a type="button" data-id="{{$a->id}}" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleModa-{{ $a->id }}" >
-                        Detail
-                      </a>
-                      @endif
 
 
 
@@ -219,6 +226,9 @@
 
 
                   </tr>
+
+
+
                   <div class="modal fade" id="exampleModa-{{ $a->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                       <div class="modal-content">
@@ -227,46 +237,47 @@
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
-                        @if($a->nama_pengirim)
+                        @if($a->paytrans)
                         <div class="modal-body">
                                 <span>Pembayaran Anda Sedang Divalidasi</span><br>
                                 <span>Contact Person jika ada kendala: 089612121703 (rohid) </span>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Atas nama Bank Pengirim</label>
-                                    <input type="text" name="nama_bank" value="{{ $a->nama_bank }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"disabled>
+                                    <input type="text" name="nama_bank" value="{{ $a->paytrans->nama_bank }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"disabled>
                                     <div id="emailHelp" class="form-text"></div>
                                   </div>
 
                                 <div class="mb-3">
                                   <label for="exampleInputEmail1" class="form-label">Atas nama Bank Pengirim</label>
-                                  <input type="text" name="nama_pengirim" value="{{ $a->nama_pengirim }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"disabled>
+                                  <input type="text" name="nama_pengirim" value="{{ $a->paytrans->nama_pengirim }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"disabled>
                                   <div id="emailHelp" class="form-text"></div>
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">NO Rek Bank Pengirim</label>
-                                    <input type="number" name="no_rek" value="{{ $a->no_rek }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled>
+                                    <input type="number" name="no_rek" value="{{ $a->paytrans->no_rek }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled>
                                     <div id="emailHelp" class="form-text"></div>
                                 </div>
 
                                 <div class="mb-3">
                                   <label for="exampleInputPassword1" class="form-label">Bukti Transfer</label>
                                   <picture>
-                                    <source srcset="{{ asset('trans/img/'.$a->bukti_image) }}" type="image/svg+xml">
-                                    <img src="{{ asset('trans/img/'.$a->bukti_image) }}" class="img-fluid img-thumbnail" alt="...">
+                                    <source srcset="{{ asset('trans/img/'.$a->paytrans->bukti_image) }}" type="image/svg+xml">
+                                    <img src="{{ asset('trans/img/'.$a->paytrans->bukti_image) }}" class="img-fluid img-thumbnail" alt="...">
                                   </picture>
                                   {{-- <img src="{{ asset('trans/img/'.$a->bukti_image) }}" wi alt=""> --}}
                                 </div>
                         </div>
                         @else
                         <div class="modal-body">
-                            <form method="POST" action="{{ url('/home/transaction/detail/post') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ url('/home/transaction/payment/post') }}" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $a->id }}">
                                 <span> Transfer ke Rekening BCA:</span><br>
                                 <span>BCA: 252529179 | A/n Rohid ammar firdaus </span>
                                 <p>Isi Form Di bawah ini berserta Bukti Transfer </p>
                                 <p>Jumlah Yang Harus dibayar Rp. {{ number_format($a->total) }}</p>
+                                <span>Contact Person jika ada kendala: 089612121703 (rohid) </span>
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">nama Bank Pengirim</label>
                                     <input type="text" name="nama_bank" value="" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
@@ -287,15 +298,28 @@
 
                                 <div class="mb-3">
                                   <label for="exampleInputPassword1" class="form-label">Bukti Transfer</label>
-                                  <input type="file" name="bukti_image" class="form-control" id="exampleInputPassword1">
+                                  <input type="file" id="fileUpload" name="bukti_image" class="form-control" id="exampleInputPassword1">
+
+
                                 </div>
+
+
+
+
+                                {{-- <div id="wrapper">
+                                    <input id="fileUpload" type="file" />
+                                    <br />
+                                    <div id="image-holder"></div>
+                                </div> --}}
                         </div>
                         @endif
 
 
+
+
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          @if ($a->nama_pengirim)
+                          @if ($a->paytrans)
 
                           @else
                           <button type="submit" class="btn btn-primary">Submit Payment</button>
@@ -313,156 +337,7 @@
 
 
 
-                {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" rel="stylesheet"> --}}
 
-
-                {{-- <style type="text/css">
-                    .pagination li{
-                        float: left;
-                        list-style-type: none;
-                        margin:5px;
-                    }
-                </style> --}}
-
-                    {{-- <td>
-                      <div class="d-flex px-2 py-1">
-                        <div>
-                          <img src="../assets/img/team-3.jpg" class="avatar avatar-sm me-3" alt="user2">
-                        </div>
-                        <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">Alexa Liras</h6>
-                          <p class="text-xs text-secondary mb-0">alexa@creative-tim.com</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <p class="text-xs font-weight-bold mb-0">Programator</p>
-                      <p class="text-xs text-secondary mb-0">Developer</p>
-                    </td>
-                    <td class="align-middle text-center text-sm">
-                      <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                    </td>
-                    <td class="align-middle text-center">
-                      <span class="text-secondary text-xs font-weight-bold">11/01/19</span>
-                    </td>
-                    <td class="align-middle">
-                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                        Edit
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex px-2 py-1">
-                        <div>
-                          <img src="../assets/img/team-4.jpg" class="avatar avatar-sm me-3" alt="user3">
-                        </div>
-                        <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">Laurent Perrier</h6>
-                          <p class="text-xs text-secondary mb-0">laurent@creative-tim.com</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <p class="text-xs font-weight-bold mb-0">Executive</p>
-                      <p class="text-xs text-secondary mb-0">Projects</p>
-                    </td>
-                    <td class="align-middle text-center text-sm">
-                      <span class="badge badge-sm bg-gradient-success">Online</span>
-                    </td>
-                    <td class="align-middle text-center">
-                      <span class="text-secondary text-xs font-weight-bold">19/09/17</span>
-                    </td>
-                    <td class="align-middle">
-                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                        Edit
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex px-2 py-1">
-                        <div>
-                          <img src="../assets/img/team-3.jpg" class="avatar avatar-sm me-3" alt="user4">
-                        </div>
-                        <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">Michael Levi</h6>
-                          <p class="text-xs text-secondary mb-0">michael@creative-tim.com</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <p class="text-xs font-weight-bold mb-0">Programator</p>
-                      <p class="text-xs text-secondary mb-0">Developer</p>
-                    </td>
-                    <td class="align-middle text-center text-sm">
-                      <span class="badge badge-sm bg-gradient-success">Online</span>
-                    </td>
-                    <td class="align-middle text-center">
-                      <span class="text-secondary text-xs font-weight-bold">24/12/08</span>
-                    </td>
-                    <td class="align-middle">
-                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                        Edit
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex px-2 py-1">
-                        <div>
-                          <img src="../assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user5">
-                        </div>
-                        <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">Richard Gran</h6>
-                          <p class="text-xs text-secondary mb-0">richard@creative-tim.com</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <p class="text-xs font-weight-bold mb-0">Manager</p>
-                      <p class="text-xs text-secondary mb-0">Executive</p>
-                    </td>
-                    <td class="align-middle text-center text-sm">
-                      <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                    </td>
-                    <td class="align-middle text-center">
-                      <span class="text-secondary text-xs font-weight-bold">04/10/21</span>
-                    </td>
-                    <td class="align-middle">
-                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                        Edit
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="d-flex px-2 py-1">
-                        <div>
-                          <img src="../assets/img/team-4.jpg" class="avatar avatar-sm me-3" alt="user6">
-                        </div>
-                        <div class="d-flex flex-column justify-content-center">
-                          <h6 class="mb-0 text-sm">Miriam Eric</h6>
-                          <p class="text-xs text-secondary mb-0">miriam@creative-tim.com</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <p class="text-xs font-weight-bold mb-0">Programtor</p>
-                      <p class="text-xs text-secondary mb-0">Developer</p>
-                    </td>
-                    <td class="align-middle text-center text-sm">
-                      <span class="badge badge-sm bg-gradient-secondary">Offline</span>
-                    </td>
-                    <td class="align-middle text-center">
-                      <span class="text-secondary text-xs font-weight-bold">14/09/20</span>
-                    </td>
-                    <td class="align-middle">
-                      <a href="javascript:;" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                        Edit
-                      </a>
-                    </td>
-                  </tr> --}}
                 </tbody>
 
               </table>
@@ -484,6 +359,185 @@
     </div>
 
 </div>
+@foreach ($all as $a)
+
+
+ <div class="modal fade" id="exampleMo-{{ $a->id }}" tabindex="-1" aria-labelledby="exampleMo" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Modal Detail Product</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table class="table align-items-center ">
+                                    <thead>
+                                        <tr>
+                                        <th>product</th>
+                                        <th>size</th>
+                                        <th>qty</th>
+
+                                        <th>sub total</th>
+                                        </tr>
+
+                                    </thead>
+                                  <tbody>
+                                    @foreach (json_decode($a->data) as $dak=>$value )
+
+
+                                    <tr>
+                                        <td>{{ App\Models\Product::find($value->product_id)->name }}</td>
+                                        <td>{{ $value->size }}</td>
+                                        <td>{{ $value->qty }}</td>
+
+                                        <td>Rp. {{ number_format($value->total) }}</td>
+
+                                    </tr>
+
+                                    @endforeach
+                                    <tr>
+                                        <td>Total qty: </td>
+                                        <td>{{$a->qty}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>total price:</td>
+                                        <td>Rp. {{ number_format($a->total) }}</td>
+                                    </tr>
+
+
+                                  </tbody>
+                                </table>
+                              </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                          </div>
+                      </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    {{-- @if ($a->shpping) --}}
+
+                    <div class="modal fade" id="exampleM-{{ $a->id }}" tabindex="-1" aria-labelledby="exampleM" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Modal Detail Shipping</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <form action="{{ url('/transaction/update/resi') }}" method="post">
+                                @csrf
+                                <input type="hidden" value="{{ $a->id }}" name="id">
+                            <div class="modal-body">
+                                    <span>Contact Person jika ada kendala: 089612121703 (rohid) </span>
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Alamat lengkap</label>
+                                        <textarea type="text" name="nama_bank" rows="5" value="{{ $a->shipping->alamat }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"disabled>{{ $a->shipping->alamat }} </textarea>
+                                        <div id="emailHelp" class="form-text"></div>
+                                      </div>
+
+                                    <div class="mb-3">
+                                      <label for="exampleInputEmail1" class="form-label">no rumah</label>
+                                      <input type="text" name="nama_pengirim" value="{{ $a->shipping->no_rumah}}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"disabled>
+                                      <div id="emailHelp" class="form-text"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Provinsi</label>
+                                        <input type="text" name="no_rek" value="{{ $a->shipping->provinsi }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled>
+                                        <div id="emailHelp" class="form-text"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Kota</label>
+                                        <input type="text" name="no_rek" value="{{ $a->shipping->kota }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled>
+                                        <div id="emailHelp" class="form-text"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Kecamatan</label>
+                                        <input type="text" name="no_rek" value="{{ $a->shipping->kecamatan }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled>
+                                        <div id="emailHelp" class="form-text"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Kelurahan</label>
+                                        <input type="text" name="no_rek" value="{{ $a->shipping->kelurahan }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled>
+                                        <div id="emailHelp" class="form-text"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Kode pos</label>
+                                        <input type="number" name="no_rek" value="{{ $a->shipping->kode_pos }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled>
+                                        <div id="emailHelp" class="form-text"></div>
+                                    </div>
+
+                                    @if (auth()->user()->role == "admin" || auth()->user()->role == "kordinator")
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">no resi</label>
+                                        <input type="text" name="no_resi" value="{{ $a->shipping->no_resi }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                                        <div id="emailHelp" class="form-text"></div>
+                                    </div>
+                                    @else
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">no resi</label>
+                                        <input type="text" name="no_rek" value="{{ $a->shipping->no_resi }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled>
+                                        <div id="emailHelp" class="form-text"></div>
+                                    </div>
+                                    @endif
+
+
+
+
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">jasa ekspedisi</label>
+                                        <input type="text" name="no_rek" value="{{ $a->shipping->jasa_expedisi }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled>
+                                        <div id="emailHelp" class="form-text"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">jenis layanan</label>
+                                        <input type="text" name="no_rek" value="{{ $a->shipping->layanan_ekspedisi }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled>
+                                        <div id="emailHelp" class="form-text"></div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">harga layanan</label>
+                                        <input type="number" name="no_rek" value="{{ $a->shipping->harga_layanan }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" disabled>
+                                        <div id="emailHelp" class="form-text"></div>
+                                    </div>
+
+
+                            </div>
+
+
+
+
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                              @if (auth()->user()->role == "admin" || auth()->user()->role == "kordinator")
+                              <button type="submit" class="btn btn-primary">update no resi</button>
+                              @else
+
+                              @endif
+
+
+                            </form>
+
+                            </div>
+                        </form>
+                          </div>
+                        </div>
+                      </div>
+                      {{-- @endif --}}
+@endforeach
 
 
 

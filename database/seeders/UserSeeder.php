@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'rasdasd',
+            'name' => 'curva suuu',
             'username' => 'kordi',
             'password' => bcrypt('rohid123'),
             'email' => 'hidtz@gmail.com',
@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'rasdasd',
+            'name' => 'ini users',
             'username' => 'users',
             'password' => bcrypt('rohid123'),
             'email' => 'hidt@gmail.com',

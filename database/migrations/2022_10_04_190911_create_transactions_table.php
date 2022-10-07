@@ -23,10 +23,10 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->json('data')->nullable();
-            $table->string("nama_pengirim")->nullable();
-            $table->string("no_rek")->nullable();
-            $table->string("bukti_image")->nullable();
-            $table->string("nama_bank")->nullable();
+            // $table->string("nama_pengirim")->nullable();
+            // $table->string("no_rek")->nullable();
+            // $table->string("bukti_image")->nullable();
+            // $table->string("nama_bank")->nullable();
 
             // $table->unsignedBigInteger('detail_id')->nullable();
             // $table->foreign('detail_id')->references('id')->on('detail_transactions')->onDelete('cascade')->onUpdate('cascade');

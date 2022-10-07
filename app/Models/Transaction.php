@@ -19,11 +19,15 @@ class Transaction extends Model
         'user_id',
         'data',
         'status',
-        'nama_pengirim',
-        'bukti_image',
-        'no_rek',
-        'nama_bank'
     ];
+
+    public function paytrans(){
+        return $this->hasOne(PaymentTransaction::class,'transaction_id');
+    }
+
+    public function shipping(){
+        return $this->hasOne(shipping::class,'transaction_id');
+    }
 
 
     public function getAutoNumberOptions()

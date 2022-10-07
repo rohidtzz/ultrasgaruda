@@ -12,7 +12,7 @@
         </div>
         <div class="header-right">
             <a href="{{ url('/cart') }}" class="card-bag"><img src="{{ asset('plaza/img/icons/bag.png') }}" alt=""><span>{{ $cart }}</span></a>
-            <a href="{{ url('/home') }}" class="search"><img width="30px" src="{{ asset('plaza/img/icons/icoo.png') }}" alt=""></a>
+            <a href="{{ url('/home/transaction') }}" class="search"><img width="30px" src="{{ asset('plaza/img/icons/icoo.png') }}" alt=""></a>
         </div>
 
 

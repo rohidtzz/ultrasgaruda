@@ -174,7 +174,7 @@ class CartController extends Controller
                 'no_invoice' => "INV".date('dmy').date('his').$user,
                 'subtotal' => 0,
                 'size' => $request->sizes,
-                'total' => $price+5000,
+                'total' => $price+15000,
                 'user_id' => $user,
                 'product_id' => $request->id
 
@@ -232,7 +232,7 @@ class CartController extends Controller
             $tset = Cart::where('id',$id)
             ->update([
                 'qty' => $cart->qty+1,
-                'total' => $cart->total+$pro->price+5000,
+                'total' => $cart->total+$pro->price+15000,
             ]);
 
             return redirect('/cart');
@@ -272,7 +272,7 @@ class CartController extends Controller
             $tset = Cart::where('id',$id)
             ->update([
                 'qty' => $cart->qty-1,
-                'total' => $cart->total-$pro->price-5000,
+                'total' => $cart->total-$pro->price-15000,
             ]);
             return redirect('/cart');
         }
@@ -308,7 +308,16 @@ class CartController extends Controller
         //     'name' => 'Taylor',
         // ]);
 
-            dd($request->all());
+
+            // dd($request->layanan);
+
+
+
+
+
+            // dd($r);
+
+            // dd($request->all());
 
     }
 

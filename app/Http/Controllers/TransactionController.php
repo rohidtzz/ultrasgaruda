@@ -5,14 +5,90 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use App\Models\Product;
 use App\Models\Cart;
-use App\Models\DetailTransaction;
+use App\Models\PaymentTransaction;
 use Illuminate\Http\Request;
+
+use App\Models\Shipping;
 
 use Validator;
 
 
 class TransactionController extends Controller
 {
+
+    public function kurir(Request $request){
+        $id = Auth()->user()->id;
+
+        $string = $request->layanan;
+        $result = preg_replace("/[^0-9]/", "", $string);
+
+
+        $pri = (int)$request->total;
+        $k = (int)$result;
+
+        $rem = $pri + $k;
+
+        $cart = Cart::where('user_id',$id)->get();
+
+        $order = Transaction::create([
+            'branch' => 'TGR',
+            'status' => 'unpaid',
+            'qty' => $request->totalqty,
+            'total' => $rem,
+            'data' => $cart,
+            'user_id' => $id,
+        ]);
+
+        // dd($request->layanan);
+
+        // dd($order);
+
+        $a = substr($request->layanan,0,-5);
+
+
+            // $r = (int)$a;
+            // dd($r)
+
+            if($a == "OKE" || $a == "REG" || $a == "ONS" || $a == "ECO" || $a == "CTC"){
+                $a = substr($request->layanan,0,-5);
+
+
+                // $r = (int)$a;
+                // dd($b);
+            }
+
+            // dd($a);
+            // dd($request->address);
+
+            $shipping = Shipping::create([
+                "alamat" => $request->address,
+                "provinsi" => $request->provinsi,
+                "no_rumah" => $request->no_rumah,
+                "kota" => $request->kota,
+                "kecamatan" => $request->kecamatan,
+                "kelurahan" => $request->kelurahan,
+                "kode_pos" => $request->kode_pos,
+                "no_hp" => $request->no_hp,
+                "jasa_expedisi" => $request->kurir,
+                "layanan_ekspedisi" => $a,
+                "harga_layanan" => $result,
+                "transaction_id" => $order->id
+            ]);
+
+            // dd($shipping);
+
+
+
+        $caro = Cart::where('user_id',$id)->get();
+
+        $caro->each->delete();
+        // dd($caro->destroy());
+
+
+
+        return redirect('/home/transaction');
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -134,7 +210,7 @@ class TransactionController extends Controller
     }
 
 
-    public function transactiondetail(Request $request)
+    public function transactionpayment(Request $request)
     {
 
 
@@ -163,12 +239,20 @@ class TransactionController extends Controller
 		$file->move($tujuan_upload,$nama_file);
 
 
-        $product = Transaction::where('id',$request->id)
-        ->update([
+        $payment = PaymentTransaction::create([
             'nama_pengirim' => $request->nama_pengirim,
             'no_rek' => $request->no_rek,
             'bukti_image' => $nama_file,
             'nama_bank' => $request->nama_bank,
+            'transaction_id' => $request->id
+        ]);
+
+        if(!$payment){
+            return redirect()->back()->withErrors('payment failed');
+        }
+
+        $trans = Transaction::where('id',$request->id)
+        ->update([
             'status' => 'validation'
         ]);
 
@@ -178,11 +262,11 @@ class TransactionController extends Controller
 
 
 
-        if(!$product){
-            return redirect()->back()->withErrors('register failed');
+        if(!$trans){
+            return redirect()->back()->withErrors('payment failed');
         }
 
-        return redirect()->back()->with(['success' => 'Registration Success']);
+        return redirect()->back()->with(['success' => 'payment Success']);
 
 
         // return view('dashboard.transaction',compact('all'));
@@ -195,12 +279,9 @@ class TransactionController extends Controller
     {
 
         $trans = Transaction::where('id',$id)
-                ->update([
-                    'status' => 'payment successful'
-                ]);
-
-
-
+        ->update([
+            'status' => 'payment successful'
+        ]);
 
         return redirect()->back();
     }
@@ -226,6 +307,19 @@ class TransactionController extends Controller
                 // dd($trans);
 
         return redirect()->back();
+    }
+
+    public function upresi(Request $request)
+    {
+
+        $ship = Shipping::where('transaction_id',$request->id)
+            ->update([
+                'no_resi' => $request->no_resi
+            ]);
+
+
+            return redirect()->back();
+
     }
 
     /**

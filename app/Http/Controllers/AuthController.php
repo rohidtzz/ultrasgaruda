@@ -63,6 +63,9 @@ class AuthController extends Controller
 
     public function login(){
         if(Auth::check()){
+            if(auth()->user()->role == "user"){
+                return redirect('/home/transaction');
+            }
             return redirect('/home');
         }
 

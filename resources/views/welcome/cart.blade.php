@@ -228,7 +228,7 @@ a:hover{
             </form> --}}
 
             <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-                <div class="col">TOTAL PRICE</div>
+                <div class="col">Product PRICE</div>
                 <div class="col text-right">&nbsp; Rp.
                 {{ number_format($total)  }}</div>
             </div>
@@ -245,9 +245,9 @@ a:hover{
                 @csrf
                 <input type="hidden" name="total" value="{{ $total }}">
                 <input type="hidden" name="totalqty" value="{{ $totalqty }}">
-            <button type="submit" onclick="return confirm('yakin Checkout?')" class="btn btn-primary" >CHECKOUT COD</button>
+            <button type="submit" onclick="return confirm('yakin Checkout?')" class="btn btn-primary" >Ambil Sendiri ke Seizone Ugi Terdekat</button>
             </form>
-            <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal" >CHECKOUT dengan kurir</button>
+            <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal" >CHECKOUT dengan jasa ekspedisi</button>
             @endif
 
 
@@ -258,7 +258,7 @@ a:hover{
 
 <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
-        <form  class="form-horizontal" action="{{url('/cek')}}" method="POST" enctype="multipart/form-data">
+        <form  class="form-horizontal" action="{{url('/transaction/kurir')}}" method="POST" enctype="multipart/form-data">
             @csrf
       <div class="modal-content">
         <div class="modal-header">
@@ -287,11 +287,49 @@ a:hover{
                     <div class="form-group ">
                     <label>Alamat Anda<span></span>
                     </label>
-                    <textarea name="address" class="form-control" rows="5" placeholder="isi dengan Alamat Lengkap Anda" ></textarea>
+                    <textarea name="address" class="form-control" rows="5" placeholder="isi dengan Alamat Lengkap Anda beserta no rumah,kecamatan,kelurahan,provinsi,kota, dan kode pos" required></textarea>
                     </div>
+
+                    <div class="form-group">
+                        <label for="">no Rumah</label>
+                        <input type="number" name="no_rumah" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">provinsi</label>
+                        <input type="text" name="provinsi" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">kota / kabupaten</label>
+                        <input type="text" name="kota" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">kecamatan</label>
+                        <input type="text" name="kecamatan" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">kelurahan</label>
+                        <input type="text" name="kelurahan" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">kode pos:</label>
+                        <input type="number" name="kode_pos" class="form-control" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="">no telepon yang bisa di hubungi</label>
+                        <input type="number" name="no_hp" class="form-control" required>
+                    </div>
+
+
+                    <h2>Jasa Pengiriman :</h2>
                     <div class="form-group form-group--inline">
                         <label for="provinsi">Provinsi Anda</label>
-                        <select name="province_id" id="province_id" class="form-control">
+                        <select  name="province_id" id="province_id" class="form-control">
                         <option value="">pilih provinsi</option>
                         @foreach ($provinsi  as $row)
                         <option value="{{$row['province_id']}}" namaprovinsi="{{$row['province']}}">{{$row['province']}}</option>
@@ -315,13 +353,13 @@ a:hover{
                     <option value="">Pilih kurir</option>
                     <option value="jne">JNE</option>
                     <option value="tiki">TIKI</option>
-                    <option value="pos">POS INDONESIA</option>
+                    {{-- <option value="pos">POS INDONESIA</option> --}}
                     </select>
 
                     <div class="form-group">
                         <label>Pilih Layanan<span>*</span>
                         </label>
-                        <select name="layanan" id="layanan" class="form-control">
+                        <select name="layanan" id="layanan" class="form-control" required>
                         <option value="">Pilih layanan</option>
                         </select>
 
@@ -367,7 +405,14 @@ a:hover{
         <div class="modal-footer">
             <input type="hidden" name="id" id="id">
           <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-          <button type="submit" onclick="return confirm('pastikan data anda sudah benar')" class="btn btn-primary">Submit</button>
+            @csrf
+            <input type="hidden" name="total" value="{{ $total }}">
+            <input type="hidden" name="totalqty" value="{{ $totalqty }}">
+            <button type="submit" onclick="return confirm('pastikan data anda sudah benar')" class="btn btn-primary">Submit</button>
+        {{-- <button type="submit" onclick="return confirm('yakin Checkout?')" class="btn btn-primary" >Ambil Sendiri ke Seizone Ugi Terdekat</button> --}}
+
+
+
         </div>
     </form>
       </div>
@@ -414,7 +459,7 @@ $.each(value.costs, function(key1, value1){
 // ini untuk looping cost nya masing masing
 // silahkan pelajari cara menampilkan data json agar lebi paham
 $.each(value1.cost, function(key2, value2){
-$('select[name="layanan"]').append('<option value="'+ value2.value +'">' + value1.service + '-' + value1.description + '-' +value2.value+ '</option>');
+$('select[name="layanan"]').append('<option value="'+ value1.service + value2.value +'">' + value1.service + '-' + value1.description + '-' +value2.value+ '</option>');
 });
 });
 });
