@@ -12,6 +12,8 @@ use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\TransactionController;
 
+use App\Http\Controllers\UsersController;
+
 use App\Models\Product;
 
 
@@ -86,6 +88,10 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
     Route::get('/cart/destroy/{id}', [CartController::class,'destroy']);
 
+    //users
+    Route::get('/home/users', [UsersController::class,'index']);
+    Route::get('/home/users/list', [UsersController::class,'list'])->name('users');
+
 
 
     //ongkir
@@ -119,6 +125,9 @@ Route::group(['middleware' => ['role:admin,kordinator']], function () {
     Route::get('/home/transaction/accept/{id}', [TransactionController::class,'accept']);
     //cancel
     Route::get('/home/transaction/cancel/{id}', [TransactionController::class,'cancel']);
+
+    Route::get('/home/users', [UsersController::class,'index']);
+    Route::get('/home/users/list', [UsersController::class,'list'])->name('users');
 
 
     //transaction
