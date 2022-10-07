@@ -420,7 +420,7 @@
                       </div>
                     </div>
 
-                    {{-- @if ($a->shpping) --}}
+                    @if ($a->shpping)
 
                     <div class="modal fade" id="exampleM-{{ $a->id }}" tabindex="-1" aria-labelledby="exampleM" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
@@ -536,7 +536,8 @@
                           </div>
                         </div>
                       </div>
-                      {{-- @endif --}}
+                      @else
+                      @endif
 @endforeach
 
 
