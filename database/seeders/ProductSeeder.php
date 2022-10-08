@@ -22,7 +22,7 @@ class ProductSeeder extends Seeder
             'size' => "S,M,L,XL,XXL",
             'category_id' => 1,
             'image' => '1.jpg',
-            'stock' => 99
+            'stock' => 100
         ]);
 
         Product::create([
@@ -31,7 +31,7 @@ class ProductSeeder extends Seeder
             'size' => "S,M,L,XL,XXL",
             'category_id' => 1,
             'image' => '2.jpg',
-            'stock' => 99
+            'stock' => 100
         ]);
 
         Product::create([
@@ -40,7 +40,7 @@ class ProductSeeder extends Seeder
             'size' => "S,M,L,XL,XXL",
             'category_id' => 2,
             'image' => '3.jpg',
-            'stock' => 99
+            'stock' => 100
         ]);
 
         Product::create([
@@ -49,7 +49,7 @@ class ProductSeeder extends Seeder
             'size' => "S,M,L,XL,XXL",
             'category_id' => 2,
             'image' => '4.jpg',
-            'stock' => 99
+            'stock' => 100
         ]);
 
         Product::create([
@@ -58,7 +58,7 @@ class ProductSeeder extends Seeder
             'size' => "S,M,L,XL,XXL",
             'category_id' => 2,
             'image' => '5.jpg',
-            'stock' => 99
+            'stock' => 100
         ]);
 
         Product::create([
@@ -67,7 +67,7 @@ class ProductSeeder extends Seeder
             'size' => "S,M,L,XL,XXL",
             'category_id' => 1,
             'image' => '6.jpg',
-            'stock' => 99
+            'stock' => 100
         ]);
 
     }

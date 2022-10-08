@@ -77,11 +77,26 @@ class TransactionController extends Controller
 
             // dd($shipping);
 
+            foreach($cart as $car){
+                $a[] = json_encode($car->product_id);
+
+                $m = [$car->qty];
+
+                foreach($a as $ko){
+                    $j[] = Product::find(json_decode($ko))->stock;
+                    $s[] = Product::find(json_decode($ko))->update([
+                        'stock' => $j[0] - $m[0]
+                    ]);
+                }
+            }
+
 
 
         $caro = Cart::where('user_id',$id)->get();
 
         $caro->each->delete();
+
+
         // dd($caro->destroy());
 
 
@@ -183,12 +198,32 @@ class TransactionController extends Controller
             'user_id' => $id,
         ]);
 
+        // $a = [];
+
+        foreach($cart as $car){
+            $a[] = json_encode($car->product_id);
+
+            $m = [$car->qty];
+
+            foreach($a as $ko){
+                $j[] = Product::find(json_decode($ko))->stock;
+                $s[] = Product::find(json_decode($ko))->update([
+                    'stock' => $j[0] - $m[0]
+                ]);
+            }
+        }
+
+        // dd($s);
 
 
         $caro = Cart::where('user_id',$id)->get();
 
         $caro->each->delete();
         // dd($caro->destroy());
+
+
+
+        // $product = Product::where('');
 
 
 
@@ -289,6 +324,21 @@ class TransactionController extends Controller
     public function reject($id)
     {
 
+        $cart = Transaction::find($id)->data;
+
+        foreach($cart as $car){
+            $a[] = json_encode($car->product_id);
+
+            $m = [$car->qty];
+
+            foreach($a as $ko){
+                $j[] = Product::find(json_decode($ko))->stock;
+                $s[] = Product::find(json_decode($ko))->update([
+                    'stock' => $j[0] + $m[0]
+                ]);
+            }
+        }
+
         $trans = Transaction::where('id',$id)
         ->update([
             'status' => 'reject'
@@ -299,6 +349,23 @@ class TransactionController extends Controller
 
     public function cancel($id)
     {
+
+        $cart = Transaction::find($id)->data;
+        // dd(json_decode($cart));
+
+        foreach($cart as $car){
+            $a[] = json_encode($car->product_id);
+
+            $m = [$car->qty];
+
+            foreach($a as $ko){
+                $j[] = Product::find(json_decode($ko))->stock;
+                $s[] = Product::find(json_decode($ko))->update([
+                    'stock' => $j[0] + $m[0]
+                ]);
+            }
+        }
+
         $trans = Transaction::where('id',$id)
                 ->update([
                     'status' => 'cancel'
