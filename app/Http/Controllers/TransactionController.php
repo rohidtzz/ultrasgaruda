@@ -326,7 +326,7 @@ class TransactionController extends Controller
 
         $cart = Transaction::find($id)->data;
 
-        foreach($cart as $car){
+        foreach(json_decode($cart) as $car){
             $a[] = json_encode($car->product_id);
 
             $m = [$car->qty];
@@ -353,7 +353,7 @@ class TransactionController extends Controller
         $cart = Transaction::find($id)->data;
         // dd(json_decode($cart));
 
-        foreach($cart as $car){
+        foreach(json_decode($cart) as $car){
             $a[] = json_encode($car->product_id);
 
             $m = [$car->qty];
