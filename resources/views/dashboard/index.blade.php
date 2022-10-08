@@ -14,12 +14,16 @@
                 <div class="numbers">
                   <p class="text-sm mb-0 text-uppercase font-weight-bold">Today's Money</p>
                   <h5 class="font-weight-bolder">
-                    $53,000
+                    @if (!$here)
+                    Rp. 0
+
+                    @else
+
+                    Rp. {{ number_format($here) }}
+
+                    @endif
                   </h5>
-                  {{-- <p class="mb-0">
-                    <span class="text-success text-sm font-weight-bolder">+55%</span>
-                    since yesterday
-                  </p> --}}
+
                 </div>
               </div>
               <div class="col-4 text-end">
@@ -89,7 +93,23 @@
                 <div class="numbers">
                   <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Sales</p>
                   <h5 class="font-weight-bolder">
-                    $103,430
+                    {{-- @if ($sales == false)
+                    Rp. 0
+                    @elseif ($sales >= 0)
+
+                    Rp. {{ number_format($sales) }}
+                    @else
+
+                    @endif --}}
+
+                    @if (!$sales)
+                    Rp. 0
+
+                    @else
+
+                    Rp. {{ number_format($sales) }}
+
+                    @endif
                   </h5>
                   {{-- <p class="mb-0">
                     <span class="text-success text-sm font-weight-bolder"></span> than last month

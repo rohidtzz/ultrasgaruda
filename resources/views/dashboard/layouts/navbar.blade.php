@@ -11,6 +11,9 @@
                 {{Request::is('home/product') ? 'Product' : ''}}
                 {{Request::is('home/transaction') ? 'Transaction' : ''}}
                 {{Request::is('home/transaction/search') ? 'Transaction' : ''}}
+                {{Request::is('home/users') ? 'Users' : ''}}
+                {{Request::is('home/users/search') ? 'Users' : ''}}
+                {{Request::is('home/profile') ? 'Profile' : ''}}
 
 
 
@@ -22,6 +25,9 @@
             {{Request::is('home/product') ? 'Product' : ''}}
             {{Request::is('home/transaction') ? 'Transaction' : ''}}
             {{Request::is('home/transaction/search') ? 'Search' : ''}}
+            {{Request::is('home/users') ? 'Users' : ''}}
+            {{Request::is('home/users/search') ? 'Search' : ''}}
+            {{Request::is('home/profile') ? 'Profile' : ''}}
 
 
           </h6>

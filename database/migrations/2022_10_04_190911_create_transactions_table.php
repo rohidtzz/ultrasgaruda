@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('no_invoice')->nullable();
             $table->enum('status',['cancel','reject','unpaid','validation','payment successful','success'])->nullable();
             $table->string('total')->nullable();
-            $table->json('size')->nullable();
             $table->json('qty')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

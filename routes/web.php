@@ -14,6 +14,8 @@ use App\Http\Controllers\TransactionController;
 
 use App\Http\Controllers\UsersController;
 
+use App\Http\Controllers\ProfileController;
+
 use App\Models\Product;
 
 
@@ -28,17 +30,6 @@ use App\Models\Product;
 |
 */
 
-
-
-// Route::get('/', function () {
-
-//     $all = Product::all();
-
-
-//     return view('welcome',compact('all'));
-// });
-
-
 route::Get('/', [ProductController::class,'index']);
 
 
@@ -46,10 +37,7 @@ route::get('/register', [AuthController::class,'index']);
 route::post('/register/post', [AuthController::class,'register']);
 
 Route::get('/login', [AuthController::class,'login']);
-
 route::post('/login/post',[AuthController::class, 'login_post']);
-
-
 
 Route::group(['middleware' => ['role:admin']], function () {
 
@@ -90,9 +78,10 @@ Route::group(['middleware' => ['role:admin']], function () {
 
     //users
     Route::get('/home/users', [UsersController::class,'index']);
+    Route::post('/home/users/search', [UsersController::class,'search']);
+    Route::post('/home/users/edit', [UsersController::class,'edit']);
+    Route::get('/home/users/delete/{id}', [UsersController::class,'delete']);
     Route::get('/home/users/list', [UsersController::class,'list'])->name('users');
-
-
 
     //ongkir
     Route::get('/origin={city_origin}&destination={city_destination}&weight={weight}&courier={courier}',[CartController::class, 'get_ongkir']);
@@ -126,12 +115,9 @@ Route::group(['middleware' => ['role:admin,kordinator']], function () {
     //cancel
     Route::get('/home/transaction/cancel/{id}', [TransactionController::class,'cancel']);
 
-    Route::get('/home/users', [UsersController::class,'index']);
-    Route::get('/home/users/list', [UsersController::class,'list'])->name('users');
-
-
     //transaction
     Route::POST('/transaction', [TransactionController::class,'index']);
+    Route::POST('/transaction/update/resi', [TransactionController::class,'upresi']);
 
     //cart
     Route::get('/cart', [CartController::class,'index']);
@@ -140,35 +126,32 @@ Route::group(['middleware' => ['role:admin,kordinator']], function () {
     Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
     Route::get('/cart/destroy/{id}', [CartController::class,'destroy']);
 
-
-
+    //users
+    Route::get('/home/users', [UsersController::class,'index']);
+    Route::post('/home/users/search', [UsersController::class,'search']);
+    Route::post('/home/users/edit', [UsersController::class,'edit']);
+    Route::get('/home/users/delete/{id}', [UsersController::class,'delete']);
+    Route::get('/home/users/list', [UsersController::class,'list'])->name('users');
 
     //ongkir
     Route::get('/origin={city_origin}&destination={city_destination}&weight={weight}&courier={courier}',[CartController::class, 'get_ongkir']);
     Route::get('province',[CartController::class, 'get_province'])->name('province');
     Route::get('/kota/{id}',[CartController::class, 'get_city']);
-
-
 
 });
 
 Route::group(['middleware' => ['role:admin,kordinator,user']], function () {
 
-    //dashboard
-    // Route::get('/home', [DashboardController::class,'index'])->name('kordinator');
-    // Route::get('/home/product', [DashboardController::class,'product']);
-
     //transaction
     Route::POST('/transaction', [TransactionController::class,'index']);
+    Route::post('/home/transaction/payment/post', [TransactionController::class,'transactionpayment']);
+    Route::POST('/transaction/kurir', [TransactionController::class,'kurir']);
 
     //Transaction home
-    // Route::get('/home/transaction/side', [DashboardController::class,'transactionside']);
     Route::get('/home/transaction', [DashboardController::class,'transaction']);
 
     //cancel
     Route::get('/home/transaction/cancel/{id}', [TransactionController::class,'cancel']);
-
-    Route::post('/home/transaction/payment/post', [TransactionController::class,'transactionpayment']);
 
     //cart
     Route::get('/cart', [CartController::class,'index']);
@@ -177,45 +160,14 @@ Route::group(['middleware' => ['role:admin,kordinator,user']], function () {
     Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
     Route::get('/cart/destroy/{id}', [CartController::class,'destroy']);
 
-    Route::post('/cek', [CartController::class,'cost']);
-
-    Route::POST('/transaction/kurir', [TransactionController::class,'kurir']);
+    //profile
+    Route::get('/home/profile', [ProfileController::class,'index']);
+    Route::post('/home/profile/edit', [ProfileController::class,'edit']);
 
     //ongkir
     Route::get('/origin={city_origin}&destination={city_destination}&weight={weight}&courier={courier}',[CartController::class, 'get_ongkir']);
     Route::get('province',[CartController::class, 'get_province'])->name('province');
     Route::get('/kota/{id}',[CartController::class, 'get_city']);
 
-
-
+    Route::get('/logout', [AuthController::class,'logout'])->name('logout');
 });
-
-
-
-
-Route::get('/logout', [AuthController::class,'logout'])->name('logout');
-
-// Route::fallback(function(){
-//     return redirect('/');
-// });
-
-// Route::middleware(['role:admin'])->group(function () {
-//     Route::get('/home', [DashboardController::class,'index'])->name('admin');
-//     Route::get('/cart', function () {
-//         return view('cart');
-//     });
-// });
-
-// Route::middleware(['role:kordinator'])->group(function () {
-//     Route::get('/home', [DashboardController::class,'index'])->name('kordinator');
-//     // Route::get('/cart', function () {
-//     //     return view('cart');
-//     // });
-// });
-
-// Route::middleware(['role:user'])->group(function () {
-//     Route::get('/home', [DashboardController::class,'index'])->name('user');
-//     Route::get('/cart', function () {
-//         return view('cart');
-//     });
-// });

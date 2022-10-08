@@ -9,6 +9,8 @@ use App\Models\PaymentTransaction;
 
 use DataTables;
 
+use Carbon\Carbon;
+
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -20,12 +22,48 @@ class DashboardController extends Controller
      */
     public function index()
     {
+        // $dat = date('Y-m-d');
 
         $user = User::all()->count();
         $product = Product::all()->count();
+        $sales = Transaction::where('status','payment successful')->orWhere('status','success')->get();
+        $here = Transaction::whereDate('created_at', Carbon::today() )->where('status','payment successful')->orWhere('status','success')->get();
+        if($here){
+
+            $c = 0;
+            foreach($here as $am){
+
+            $c += $am->total;
+            }
 
 
-        return view('dashboard.index',compact('user','product'));
+            $here = $c;
+
+        } else {
+
+            $here = 0;
+        }
+
+        if($sales){
+
+            $a = 0;
+            foreach($sales as $ak){
+
+                $a += $ak->total;
+            }
+
+            $sales = $a;
+
+
+            return view('dashboard.index',compact('user','product','sales','here'));
+
+        }
+
+        $sales = 0;
+
+
+
+        return view('dashboard.index',compact('user','product','sales','here'));
     }
 
     public function product()
@@ -74,61 +112,4 @@ class DashboardController extends Controller
         // return view('dashboard.transaction');
     }
 
-
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

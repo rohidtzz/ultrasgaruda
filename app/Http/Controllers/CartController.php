@@ -61,26 +61,6 @@ class CartController extends Controller
         }
 
 
-        // dd($totalqty);
-
-
-
-            // foreach ($all as $m=>$value){
-
-            //     $quan +=$value['qty'];
-
-
-            //     $harga +=$value['total'];
-
-
-            //     $total = $harga * $quan;
-            // }
-
-
-
-
-        // dd($all);
-
         $cart = Cart::where('user_id',$user)->count();
 
 
@@ -155,15 +135,6 @@ class CartController extends Controller
 
             ]);
 
-
-
-
-
-
-
-
-            // dd($tset);
-
             return redirect('/cart');
         }
 
@@ -195,27 +166,6 @@ class CartController extends Controller
         ]);
 
         return redirect('/cart');
-
-
-
-
-
-
-
-
-
-        // if($cart->size == $request->sizes){
-
-        // }
-
-        // $cor = ['size' => $request->sizes];
-
-
-
-        // dd($cek);
-
-
-
 
     }
 
@@ -298,29 +248,6 @@ class CartController extends Controller
         return redirect('/cart');
 
     }
-
-
-    public function cost(Request $request){
-        // $response = Http::withHeaders([
-        //     'key' => '1d0baea46ae6872a997da365cbfb4046',
-        //     'X-Second' => 'bar'
-        // ])->post('https://api.rajaongkir.com/starter/city', [
-        //     'name' => 'Taylor',
-        // ]);
-
-
-            // dd($request->layanan);
-
-
-
-
-
-            // dd($r);
-
-            // dd($request->all());
-
-    }
-
 
     public function get_ongkir($origin, $destination, $weight, $courier){
         $curl = curl_init();
@@ -422,48 +349,4 @@ class CartController extends Controller
             }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    // public function store(Request $request)
-    // {
-    //     //
-    // }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Cart $cart)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Cart  $cart
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Cart $cart)
-    {
-        //
-    }
 }

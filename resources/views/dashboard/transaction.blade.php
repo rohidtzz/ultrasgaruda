@@ -49,9 +49,6 @@
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Payment</th>
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Action</th>
-
-                    {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Employed</th> --}}
-                    {{-- <th class="text-secondary opacity-7"></th> --}}
                   </tr>
                 </thead>
                 <tbody>
@@ -156,6 +153,20 @@
                         Payment
                       </a>
                       @endif
+
+                      @if ($a->status == "validation")
+                      <a type="button" data-id="{{$a->id}}"  style="padding-left:10px;" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleModa-{{ $a->id }}" >
+                        Payment detail
+                      </a>
+                      @endif
+
+                      @if ($a->status == "payment successful")
+                      <a type="button" data-id="{{$a->id}}"  style="padding-left:10px;" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleModa-{{ $a->id }}" >
+                        Payment detail
+                      </a>
+                      @endif
+
+
 
                       @endif
 
@@ -306,11 +317,7 @@
 
 
 
-                                {{-- <div id="wrapper">
-                                    <input id="fileUpload" type="file" />
-                                    <br />
-                                    <div id="image-holder"></div>
-                                </div> --}}
+
                         </div>
                         @endif
 
@@ -374,6 +381,7 @@
                                 <table class="table align-items-center ">
                                     <thead>
                                         <tr>
+                                        <th>Img</th>
                                         <th>product</th>
                                         <th>size</th>
                                         <th>qty</th>
@@ -387,6 +395,7 @@
 
 
                                     <tr>
+                                        <td><img class="img-thumbnail" src="{{ asset('product/img/'.App\Models\Product::find($value->product_id)->image) }}" alt=""></td>
                                         <td>{{ App\Models\Product::find($value->product_id)->name }}</td>
                                         <td>{{ $value->size }}</td>
                                         <td>{{ $value->qty }}</td>

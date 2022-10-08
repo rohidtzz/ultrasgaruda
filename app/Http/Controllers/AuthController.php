@@ -22,7 +22,6 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-
     public function register(Request $request)
     {
 
@@ -79,6 +78,10 @@ class AuthController extends Controller
             return redirect('/login')->withErrors(['errors' => 'username or password is incorrect']);
         }
 
+        if(Auth()->user()->role == "admin" || Auth()->user()->role == "kordinator"){
+            return redirect('/home');
+        }
+
         return redirect('/');
 
     }
@@ -91,72 +94,5 @@ class AuthController extends Controller
         // request()->session()->regenerateToken();
 
         return redirect('/login')->with(['success' => 'success logout']);;
-    }
-
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }
