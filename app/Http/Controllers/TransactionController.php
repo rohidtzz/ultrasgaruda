@@ -8,6 +8,9 @@ use App\Models\Cart;
 use App\Models\PaymentTransaction;
 use Illuminate\Http\Request;
 
+use App\Mail\MailSend;
+use Illuminate\Support\Facades\Mail;
+
 use App\Models\Shipping;
 
 use Validator;
@@ -291,7 +294,19 @@ class TransactionController extends Controller
             'status' => 'validation'
         ]);
 
+        $tr = Transaction::find($request->id);
+
         // dd($product);
+
+        $details = [
+            'judul' => 'trasaction masuk',
+            'status' => 'validation',
+            'no_invoice' => $tr->no_invoice,
+        ];
+
+        $mails = Auth()->user()->email;
+
+        Mail::to($mails)->send(new MailSend($details));
 
 
 

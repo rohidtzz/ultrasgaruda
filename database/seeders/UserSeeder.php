@@ -41,7 +41,7 @@ class UserSeeder extends Seeder
             'name' => 'ini users',
             'username' => 'users',
             'password' => bcrypt('rohid123'),
-            'email' => 'hidt@gmail.com',
+            'email' => 'gemersrasta@gmail.com',
             'role' => 'user',
             'gender' => 'pria',
             'no_hp' => '8927417'
