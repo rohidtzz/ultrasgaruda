@@ -3,8 +3,8 @@
 <head>
 	<title>Ultras Garuda Indonesia</title>
 	<meta charset="UTF-8">
-	<meta name="description" content="The Plaza eCommerce Template">
-	<meta name="keywords" content="plaza, eCommerce, creative, html">
+	<meta name="description" content="Ultras Garuda Indonesia Seizone Tangerang">
+	<meta name="keywords" content="Ultras Garuda">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Favicon -->
 	<link href="{{ asset('ico/ico.ico') }}" rel="shortcut icon"/>
