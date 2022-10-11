@@ -484,10 +484,10 @@ class TransactionController extends Controller
         }
 
         $details = [
-            'judul' => 'transaction is successfuly',
-            'status' => 'payment succesfuly',
+            'judul' => 'transaction is reject',
+            'status' => 'reject',
             'no_invoice' => $tr->no_invoice,
-            'desc' => 'pembayaran telah di validasi'
+            'desc' => 'transaction di reject oleh '.$user
         ];
 
         Mail::to($b)->send(new MailSend($details));
