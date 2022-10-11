@@ -351,17 +351,22 @@
                       <tr>
                         <td>judul</td>
                         <td>:</td>
-                        <td>{{$details['judul']}}</td>
+                        <td> {{$details['judul']}}</td>
                       </tr>
                       <tr>
                         <td>Status</td>
                         <td>:</td>
-                        <td>{{$details['status']}}</td>
+                        <td> {{$details['status']}}</td>
                       </tr>
                       <tr>
-                        <td>no Invoice</td>
+                        <td>No Invoice</td>
                         <td>:</td>
-                        <td>{{$details['no_invoice']}}</td>
+                        <td> {{$details['no_invoice']}}</td>
+                      </tr>
+                      <tr>
+                        <td>Description</td>
+                        <td>:</td>
+                        <td> {{$details['desc']}}</td>
                       </tr>
                     </tr>
                   </table>

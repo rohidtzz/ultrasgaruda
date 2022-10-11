@@ -250,8 +250,15 @@
 
                         @if($a->paytrans)
                         <div class="modal-body">
-                                <span>Pembayaran Anda Sedang Divalidasi</span><br>
-                                <span>Contact Person jika ada kendala: 089612121703 (rohid) </span>
+                            @if($a->status == "validation")
+                            <span>Pembayaran Anda Sedang Divalidasi</span><br>
+                            <span>Contact Person jika ada kendala: 089612121703 (rohid) </span>
+                            @elseif ($a->status == "payment successful")
+                            <span>Pembayaran Anda successful</span><br>
+                            <span>Contact Person jika ada kendala: 089612121703 (rohid) </span>
+                            @else
+                            @endif
+
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Atas nama Bank Pengirim</label>
                                     <input type="text" name="nama_bank" value="{{ $a->paytrans->nama_bank }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"disabled>

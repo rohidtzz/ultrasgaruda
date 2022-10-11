@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use App\Models\Product;
 use App\Models\Cart;
+use App\Models\User;
 use App\Models\PaymentTransaction;
 use Illuminate\Http\Request;
 
@@ -299,14 +300,32 @@ class TransactionController extends Controller
         // dd($product);
 
         $details = [
-            'judul' => 'trasaction masuk',
+            'judul' => 'transaction masuk',
             'status' => 'validation',
             'no_invoice' => $tr->no_invoice,
+            'desc' => 'tolong validasi transaksi ini'
         ];
 
-        $mails = Auth()->user()->email;
+        $a = Transaction::where('id',$request->id)->first()->user_id;
+        $b = User::where('id',$a)->first()->email;
+        // dd($b);
 
-        Mail::to($mails)->send(new MailSend($details));
+        $as = User::where('role','admin')->orWhere('role','kordinator')->get();
+        // $k = [];
+        foreach($as as $value){
+
+            $k[] = $value->email;
+
+            foreach($k as $l){
+
+                $g = Mail::to($l)->send(new MailSend($details));
+
+            }
+
+        }
+
+
+        // Mail::to($mails)->send(new MailSend($details));
 
 
 
@@ -328,10 +347,53 @@ class TransactionController extends Controller
     public function accept($id)
     {
 
+        $user = Auth()->user()->name;
+
+
+        $a = Transaction::where('id',$id)->first()->user_id;
+        $b = User::where('id',$a)->first()->email;
+        // dd($b);
+
         $trans = Transaction::where('id',$id)
         ->update([
             'status' => 'payment successful'
         ]);
+
+        $tr = Transaction::find($id);
+
+        $details = [
+            'judul' => 'transaction is successfuly',
+            'status' => 'payment succesfuly',
+            'no_invoice' => $tr->no_invoice,
+            'desc' => 'transaction divalidasi oleh '.$user
+        ];
+
+        // $mails = Auth()->user()->email;
+
+        $as = User::where('role','admin')->orWhere('role','kordinator')->get();
+        // $k = [];
+        foreach($as as $value){
+
+            $k[] = $value->email;
+
+            foreach($k as $l){
+
+                $g = Mail::to($l)->send(new MailSend($details));
+
+            }
+
+        }
+
+        $details = [
+            'judul' => 'transaction is successfuly',
+            'status' => 'payment succesfuly',
+            'no_invoice' => $tr->no_invoice,
+            'desc' => 'pembayaran telah di validasi'
+        ];
+
+        Mail::to($b)->send(new MailSend($details));
+
+
 
         return redirect()->back();
     }
@@ -339,7 +401,15 @@ class TransactionController extends Controller
     public function reject($id)
     {
 
+        $user = Auth()->user()->name;
+
+
+        $a = Transaction::where('id',$id)->first()->user_id;
+        $b = User::where('id',$a)->first()->email;
+
         $cart = Transaction::find($id)->data;
+        // dd(json_encode($cart));
+        $a = [];
 
         foreach(json_decode($cart) as $car){
             $a[] = json_encode($car->product_id);
@@ -354,10 +424,40 @@ class TransactionController extends Controller
             }
         }
 
+
         $trans = Transaction::where('id',$id)
         ->update([
             'status' => 'reject'
         ]);
+
+
+
+        $tr = Transaction::find($id);
+
+        $details = [
+            'judul' => 'transaction is reject',
+            'status' => 'reject',
+            'no_invoice' => $tr->no_invoice,
+            'desc' => 'transaction di reject oleh '.$user
+        ];
+
+        // $mails = Auth()->user()->email;
+
+        $as = User::where('role','admin')->orWhere('role','kordinator')->get();
+        // $k = [];
+        foreach($as as $value){
+
+            $k[] = $value->email;
+
+            foreach($k as $l){
+
+                $g = Mail::to($l)->send(new MailSend($details));
+
+            }
+
+        }
+
+        Mail::to($b)->send(new MailSend($details));
 
         return redirect()->back();
     }

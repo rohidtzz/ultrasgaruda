@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'name' => 'rohid',
             'username' => 'rohid',
             'password' => bcrypt('rohid123'),
-            'email' => 'hidtzz@gmail.com',
+            'email' => 'rohidammarfirdaus@gmail.com',
             'role' => 'admin',
             'gender' => 'pria',
             'no_hp' => '891267417'
@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
             'name' => 'curva suuu',
             'username' => 'kordi',
             'password' => bcrypt('rohid123'),
-            'email' => 'hidtz@gmail.com',
+            'email' => 'rohidtzz@gmail.com',
             'role' => 'kordinator',
             'gender' => 'pria',
             'no_hp' => '89267417'
