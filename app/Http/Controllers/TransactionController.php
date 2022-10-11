@@ -310,17 +310,25 @@ class TransactionController extends Controller
         $b = User::where('id',$a)->first()->email;
         // dd($b);
 
-        $as = User::where('role','admin')->orWhere('role','kordinator')->get();
+        $as = User::orWhere('role','admin')->orWhere('role','kordinator')->get('email');
+        // dd($as[1]);
         // $k = [];
         foreach($as as $value){
 
             $k[] = $value->email;
+            // dd($k);
 
-            foreach($k as $l){
 
-                $g = Mail::to($l)->send(new MailSend($details));
 
-            }
+        }
+
+        $k = json_encode($k);
+        // dd($k);
+
+        foreach(json_decode($k) as $l){
+            // dd($k);
+            $g = Mail::to($l)->send(new MailSend($details));
+            // dd($g);
 
         }
 
@@ -370,19 +378,29 @@ class TransactionController extends Controller
 
         // $mails = Auth()->user()->email;
 
-        $as = User::where('role','admin')->orWhere('role','kordinator')->get();
+        $as = User::orWhere('role','admin')->orWhere('role','kordinator')->get('email');
+        // dd($as[1]);
         // $k = [];
         foreach($as as $value){
 
             $k[] = $value->email;
+            // dd($k);
 
-            foreach($k as $l){
 
-                $g = Mail::to($l)->send(new MailSend($details));
-
-            }
 
         }
+
+        $k = json_encode($k);
+        // dd($k);
+
+        foreach(json_decode($k) as $l){
+            // dd($k);
+            $g = Mail::to($l)->send(new MailSend($details));
+            // dd($g);
+
+        }
+
+
 
         $details = [
             'judul' => 'transaction is successfuly',
@@ -443,17 +461,25 @@ class TransactionController extends Controller
 
         // $mails = Auth()->user()->email;
 
-        $as = User::where('role','admin')->orWhere('role','kordinator')->get();
+        $as = User::orWhere('role','admin')->orWhere('role','kordinator')->get('email');
+        // dd($as[1]);
         // $k = [];
         foreach($as as $value){
 
             $k[] = $value->email;
+            // dd($k);
 
-            foreach($k as $l){
 
-                $g = Mail::to($l)->send(new MailSend($details));
 
-            }
+        }
+
+        $k = json_encode($k);
+        // dd($k);
+
+        foreach(json_decode($k) as $l){
+            // dd($k);
+            $g = Mail::to($l)->send(new MailSend($details));
+            // dd($g);
 
         }
 
