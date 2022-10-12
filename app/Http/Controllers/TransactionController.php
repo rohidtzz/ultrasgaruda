@@ -80,7 +80,7 @@ class TransactionController extends Controller
             ]);
 
             // dd($shipping);
-            // $a = [];
+            $a = [];
 
             foreach(json_decode($cart) as $car){
                 $a[] = json_encode($car->product_id);
