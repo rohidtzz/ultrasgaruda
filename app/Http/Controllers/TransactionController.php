@@ -403,6 +403,11 @@ class TransactionController extends Controller
 
         }
 
+        $user = User::where('id',$a)
+        ->update([
+            'status' => 1
+        ]);
+
         $k = json_encode($k);
         // dd($k);
 

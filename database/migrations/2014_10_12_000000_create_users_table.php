@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('no_hp');
             $table->string('nik');
+            $table->string('status')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('username')->unique();
             $table->enum('role',['admin','kordinator','user','guest']);

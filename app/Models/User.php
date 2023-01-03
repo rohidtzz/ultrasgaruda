@@ -25,7 +25,8 @@ class User extends Authenticatable
         'no_hp',
         'gender',
         'role',
-        'nik'
+        'nik',
+        'status'
     ];
 
     /**
