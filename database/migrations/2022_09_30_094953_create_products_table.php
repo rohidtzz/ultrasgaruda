@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string("size")->nullable();
             $table->integer("stock");
             $table->string("image");
+            $table->string("desc");
 
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');

@@ -83,6 +83,7 @@
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Img</th>
+                    <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Desc</th>
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Price</th>
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Stock</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Size</th>
@@ -116,6 +117,9 @@
                           </div>
                       </div>
                     </td>
+                    <td>
+                        <p class="text-xs font-weight-bold mb-0 text-center">{{ $a->desc }}</p>
+                      </td>
                     <td>
                       <p class="text-xs font-weight-bold mb-0 text-center">Rp.{{ number_format($a->price) }}</p>
                     </td>
@@ -168,6 +172,11 @@
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Price</label>
                                         <input type="number" name="price" value="{{ $al->price }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                                        <div id="emailHelp" class="form-text"></div>
+                                      </div>
+                                      <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Desc</label>
+                                        <input type="text" name="desc" value="{{ $al->desc }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
                                         <div id="emailHelp" class="form-text"></div>
                                       </div>
                                       <div class="mb-3">

@@ -40,7 +40,7 @@ class CartController extends Controller
 
             // $quan +=$value['qty'];
 
-            $harga +=$value['total'];
+            $harga +=$value['subtotal'];
 
 
             $total = $harga;
@@ -65,10 +65,10 @@ class CartController extends Controller
 
 
 
-        $provinsi = $this->get_province();
+        // $provinsi = $this->get_province();
         // dd($all);
 
-        return view('welcome.cart',compact('all','cart','total','totalqty','provinsi'));
+        return view('welcome.cart',compact('all','cart','total','totalqty'));
 
     }
 
@@ -92,80 +92,84 @@ class CartController extends Controller
 
         $cart = Cart::where('product_id',$request->id)->where('user_id',$user)->first();
 
-        // dd($cart->size);
-
-
-        if($cart != null){
-
-            // $row = [
-            //     'size' => $cart->size.','.$request->sizes
-            // ];
-
-            if($cart->size == $request->sizes){
-                // $ce =Cart::where('product_id',$request->id)
-                // ->update([
-                //     'qty' => $cart->qty+1,
-                //     'total' => $cart->total+$price,
-                //     'size' => $cart->size,
-                // ]);
-                $tset = Cart::where('product_id',$request->id)
-                ->update([
-                    'qty' => $cart->qty+1,
-                    'total' => $cart->total,
-                    'size' => $cart->size.','.$request->sizes
-                ]);
-
-
-
-                // dd($cek);
-
-                return redirect('/cart');
-            }
-
-
-
-            $ce = Cart::create([
-                'qty' => 1,
-                'no_invoice' => "INV".date('dmy').date('his').$user,
-                'subtotal' => 0,
-                'size' => $request->sizes,
-                'total' => $price,
-                'user_id' => $user,
-                'product_id' => $request->id
-
-            ]);
-
-            return redirect('/cart');
-        }
-
-        if($request->sizes == 'XXL'){
-
-            $ce = Cart::create([
-                'qty' => 1,
-                'no_invoice' => "INV".date('dmy').date('his').$user,
-                'subtotal' => 0,
-                'size' => $request->sizes,
-                'total' => $price+15000,
-                'user_id' => $user,
-                'product_id' => $request->id
-
-            ]);
-
-            return redirect('/cart');
+        if($cart){
+            return redirect('/cart')->withSuccess('Add Product hanya bisa 1');
         }
 
         $cek = Cart::create([
             'qty' => 1,
-            'no_invoice' => "INV".date('dmy').date('his').$user,
-            'subtotal' => 0,
-            'size' => $request->sizes,
-            'total' => $price,
+            'subtotal' => $price,
             'user_id' => $user,
             'product_id' => $request->id
 
         ]);
 
         return redirect('/cart');
+
+        // dd($cart->size);
+
+
+        // if($cart != null){
+
+
+
+        //     if($cart->size == $request->sizes){
+
+        //         $tset = Cart::where('product_id',$request->id)
+        //         ->update([
+        //             'qty' => $cart->qty+1,
+        //             'total' => $cart->total,
+        //             'size' => $cart->size.','.$request->sizes
+        //         ]);
+
+
+        //         return redirect('/cart');
+        //     }
+
+
+
+        //     $ce = Cart::create([
+        //         'qty' => 1,
+        //         'no_invoice' => "INV".date('dmy').date('his').$user,
+        //         'subtotal' => 0,
+        //         'size' => $request->sizes,
+        //         'total' => $price,
+        //         'user_id' => $user,
+        //         'product_id' => $request->id
+
+        //     ]);
+
+        //     return redirect('/cart');
+        // }
+
+        // if($request->sizes == 'XXL'){
+
+        //     $ce = Cart::create([
+        //         'qty' => 1,
+        //         'no_invoice' => "INV".date('dmy').date('his').$user,
+        //         'subtotal' => 0,
+        //         'size' => $request->sizes,
+        //         'total' => $price+15000,
+        //         'user_id' => $user,
+        //         'product_id' => $request->id
+
+        //     ]);
+
+        //     return redirect('/cart');
+        // }
+
+        // $cek = Cart::create([
+        //     'qty' => 1,
+        //     'no_invoice' => "INV".date('dmy').date('his').$user,
+        //     'subtotal' => 0,
+        //     'size' => $request->sizes,
+        //     'total' => $price,
+        //     'user_id' => $user,
+        //     'product_id' => $request->id
+
+        // ]);
+
+        // return redirect('/cart');
 
     }
 

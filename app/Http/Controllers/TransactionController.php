@@ -21,7 +21,10 @@ class TransactionController extends Controller
 {
 
     public function kurir(Request $request){
+
+
         $id = Auth()->user()->id;
+
 
         $string = $request->layanan;
         $result = preg_replace("/[^0-9]/", "", $string);
@@ -118,6 +121,11 @@ class TransactionController extends Controller
     {
 
         $id = Auth()->user()->id;
+
+        $cekstatus = Transaction::where('user_id',$id);
+        if($cekstatus->count() >= 1){
+            return redirect('/home/transaction');
+        }
 
         // $s = Transaction::where('user_id',$id)->get();
         // $k = $s->product_id;
@@ -230,7 +238,11 @@ class TransactionController extends Controller
 
         // $product = Product::where('');
 
+        // $stoc = Product::find(1);
 
+        // Product::find(1)->update([
+        //     'stock' => $stoc->stock-1
+        // ]);
 
         return redirect('/home/transaction');
 

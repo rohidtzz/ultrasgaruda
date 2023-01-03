@@ -178,14 +178,16 @@ a:hover{
                     <div class="col-2"><img class="img-fluid" src="{{ asset('/product/img/'.$el->image) }}"></div>
                     <div class="col">
                         <div class="row">{{ App\Models\Product::find($a->product_id)->name }}</div>
-                        <div class="row text-muted">Size: {{ $a->size }}</div>
+                        <div class="row text-muted">{{ App\Models\Product::find($a->product_id)->desc }}</div>
                     </div>
 
                     <div class="col">
-                        <a href="{{ url('/cart/qty/min/'.$a->id ) }}" min="0">-</a><a href="#" value="{{ $a->qty }}" min="0" class="border">{{ $a->qty }}</a><a href="{{ url('/cart/qty/up/'.$a->id ) }}">+</a>
+                        {{-- <a href="{{ url('/cart/qty/min/'.$a->id ) }}" min="0">-</a> --}}
+                        <a href="#" value="{{ $a->qty }}" min="0" class="border">{{ $a->qty }}</a>
+                        {{-- <a href="{{ url('/cart/qty/up/'.$a->id ) }}">+</a> --}}
                     </div>
 
-                    <div class="col">&nbsp; <?php echo 'Rp. ' . $number_format; ?> <span class="close"><a href="{{ url('/cart/destroy/'.$a->id ) }}">&#10005;</a></span></div>
+                    <div class="col">&nbsp; <?php echo 'Rp. ' .  number_format($a->subtotal) ; ?> <span class="close"><a href="{{ url('/cart/destroy/'.$a->id ) }}">&#10005;</a></span></div>
                 </div>
             </div>
             @endforeach
@@ -245,9 +247,9 @@ a:hover{
                 @csrf
                 <input type="hidden" name="total" value="{{ $total }}">
                 <input type="hidden" name="totalqty" value="{{ $totalqty }}">
-            <button type="submit" onclick="return confirm('yakin Checkout?')" class="btn btn-primary" >Ambil Sendiri ke Seizone Ugi Terdekat</button>
+            <button type="submit" onclick="return confirm('yakin Checkout?')" class="btn btn-primary" >chekout</button>
             </form>
-            <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal" >CHECKOUT dengan jasa ekspedisi</button>
+            {{-- <button type="button" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal" >CHECKOUT dengan jasa ekspedisi</button> --}}
             @endif
 
 
@@ -255,285 +257,6 @@ a:hover{
     </div>
 
 </div>
-
-<div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md">
-        <form  class="form-horizontal" action="{{url('/transaction/kurir')}}" method="POST" enctype="multipart/form-data">
-            @csrf
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">CheckOut</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-
-            <div class="form-group ">
-
-
-                    {{-- <h2>Halaman Checkout</h2> --}}
-
-                    {{-- <form class="ps-checkout__form" action="" method="post">
-                    @csrf --}}
-
-                    {{-- <h3 class="mt-5 mb-5">Alamat Pengiriman</h3> --}}
-                    <div class="form-group ">
-                    {{-- <label>Provinsi asal</label> --}}
-                    <input type="hidden" type="text" value="3" class="form-control" name="province_origin">
-                    </div>
-                    <div class="form-group ">
-                    {{-- <label>Kota Asal</label> --}}
-                    <input type="hidden" value="456"  class="form-control" id="city_origin" name="city_origin">
-                    </div>
-                    <div class="form-group ">
-                    <label>Alamat Anda<span></span>
-                    </label>
-                    <textarea name="address" class="form-control" rows="5" placeholder="isi dengan Alamat Lengkap Anda beserta no rumah,kecamatan,kelurahan,provinsi,kota, dan kode pos" required></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="">no Rumah</label>
-                        <input type="number" name="no_rumah" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="">provinsi</label>
-                        <input type="text" name="provinsi" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="">kota / kabupaten</label>
-                        <input type="text" name="kota" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="">kecamatan</label>
-                        <input type="text" name="kecamatan" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="">kelurahan</label>
-                        <input type="text" name="kelurahan" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="">kode pos:</label>
-                        <input type="number" name="kode_pos" class="form-control" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="">no telepon yang bisa di hubungi</label>
-                        <input type="number" name="no_hp" class="form-control" required>
-                    </div>
-
-
-                    <h2>Jasa Pengiriman :</h2>
-                    <div class="form-group form-group--inline">
-                        <label for="provinsi">Provinsi Anda</label>
-                        <select  name="province_id" id="province_id" class="form-control">
-                        <option value="">pilih provinsi</option>
-                        @foreach ($provinsi  as $row)
-                        <option value="{{$row['province_id']}}" namaprovinsi="{{$row['province']}}">{{$row['province']}}</option>
-                        @endforeach
-                        </select>
-                        </div>
-                    <div class="form-group">
-                        <input type="hidden" class="form-control" id="nama_provinsi" nama="nama_provinsi" placeholder="ini untuk menangkap nama provinsi ">
-                    </div>
-                    <div class="form-group ">
-                    <label>Kota Anda<span>*</span>
-                    </label>
-                    <select name="kota_id" id="kota_id" class="form-control">
-                    <option value="">Pilih Kota</option>
-                    </select>
-                    </div>
-
-                    <label>Pilih Ekspedisi<span>*</span>
-                    </label>
-                    <select name="kurir" id="kurir" class="form-control">
-                    <option value="">Pilih kurir</option>
-                    <option value="jne">JNE</option>
-                    <option value="tiki">TIKI</option>
-                    {{-- <option value="pos">POS INDONESIA</option> --}}
-                    </select>
-
-                    <div class="form-group">
-                        <label>Pilih Layanan<span>*</span>
-                        </label>
-                        <select name="layanan" id="layanan" class="form-control" required>
-                        <option value="">Pilih layanan</option>
-                        </select>
-
-                        </div>
-                    </div>
-
-
-                    {{-- <div class="form-group">
-                    <input type="text" class="form-control" nama="nama_kota" id="nama_kota"  placeholder="ini untuk menangkap nama kota">
-                    </div>
-                    <div class="form-group ">
-                    <label>Kode Pos<span>*</span>
-                    </label>
-                    <input type="text" name="kode_pos" class="form-control" >
-                    </div>
-                    </div>
-                    <div class="col-md-4">
-                    <div class="form-group ">
-                    <label>Total Belanja<span>*</span>
-                    </label>
-                    <input type="text" name="totalbelanja" class="form-control" >
-                    </div> --}}
-                    <div class="form-group ">
-                    {{-- <label>total berat (gram) </label> --}}
-                    <input type="hidden" value="200" id="weight" name="weight">
-                    </div>
-                    {{-- <div class="form-group ">
-                    <label>total ongkos kirim </label>
-                    <input class="form-control" type="text" id="ongkos_kirim" name="ongkos_kirim">
-                    </div>
-                    <div class="form-group ">
-                    <label>total keseluruhan </label>
-                    <input class="form-control" type="text" id="ongkos_kirim" name="ongkos_kirim">
-                    </div>
-                    <div class="form-group">
-                    <button class="btn btn-primary" type="submit">Proses Order</button>
-                    </div> --}}
-
-
-
-
-        </div>
-        <div class="modal-footer">
-            <input type="hidden" name="id" id="id">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-            @csrf
-            <input type="hidden" name="total" value="{{ $total }}">
-            <input type="hidden" name="totalqty" value="{{ $totalqty }}">
-            <button type="submit" onclick="return confirm('pastikan data anda sudah benar')" class="btn btn-primary">Submit</button>
-        {{-- <button type="submit" onclick="return confirm('yakin Checkout?')" class="btn btn-primary" >Ambil Sendiri ke Seizone Ugi Terdekat</button> --}}
-
-
-
-        </div>
-    </form>
-      </div>
-    </div>
-  </div>
-
-  <script src="https://code.jquery.com/jquery-3.4.1.js"
-integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-crossorigin="anonymous"></script>
-
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-{{-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> --}}
-
-
-  <script>
-        $('select[name="kurir"]').on('change', function(){
-        // kita buat variable untuk menampung data data dari  inputan
-        // name city_origin di dapat dari input text name city_origin
-        let origin = $("input[name=city_origin]").val();
-        // name kota_id di dapat dari select text name kota_id
-        let destination = $("select[name=kota_id]").val();
-        // name kurir di dapat dari select text name kurir
-        let courier = $("select[name=kurir]").val();
-        // name weight di dapat dari select text name weight
-        let weight = $("input[name=weight]").val();
-        // alert(courier);
-        if(courier){
-jQuery.ajax({
-url:"/origin="+origin+"&destination="+destination+"&weight="+weight+"&courier="+courier,
-type:'GET',
-dataType:'json',
-success:function(data){
-$('select[name="layanan"]').empty();
-// ini untuk looping data result nya
-$.each(data, function(key, value){
-// ini looping data layanan misal jne reg, jne oke, jne yes
-$.each(value.costs, function(key1, value1){
-// ini untuk looping cost nya masing masing
-// silahkan pelajari cara menampilkan data json agar lebi paham
-$.each(value1.cost, function(key2, value2){
-$('select[name="layanan"]').append('<option value="'+ value1.service + value2.value +'">' + value1.service + '-' + value1.description + '-' +value2.value+ '</option>');
-});
-});
-});
-}
-});
-} else {
-$('select[name="layanan"]').empty();
-}
-        });
-  </script>
-
-<script>
-    $(document).ready(function(){
-    //ini ketika provinsi tujuan di klik maka akan eksekusi perintah yg kita mau
-    //name select nama nya "provinve_id" kalian bisa sesuaikan dengan form select kalian
-    $('select[name="province_id"]').on('change', function(){
-// membuat variable namaprovinsiku untyk mendapatkan atribut nama provinsi
-    var namaprovinsiku = $("#province_id option:selected").attr("namaprovinsi");
-// menampilkan hasil nama provinsi ke input id nama_provinsi
-    $("#nama_provinsi").val(namaprovinsiku);
-
-
-    let provinceid = $(this).val();
-    //kita cek jika id di dpatkan maka apa yg akan kita eksekusi
-    if(provinceid){
-    // jika di temukan id nya kita buat eksekusi ajax GET
-    jQuery.ajax({
-    // url yg di root yang kita buat tadi
-    url:"/kota/"+provinceid,
-    // aksion GET, karena kita mau mengambil data
-    type:'GET',
-    // type data json
-    dataType:'json',
-    // jika data berhasil di dapat maka kita mau apain nih
-    success:function(data){
-
-
-    // jika tidak ada select dr provinsi maka select kota kososng / empty
-    $('select[name="kota_id"]').empty();
-    // jika ada kita looping dengan each
-    $.each(data, function(key, value){
-    // perhtikan dimana kita akan menampilkan data select nya, di sini saya memberi name select kota adalah kota_id
-    $('select[name="kota_id"]').append('<option value="'+ value.city_id +'" namakota="'+ value.type +' ' +value.city_name+ '">' + value.type + ' ' + value.city_name + '</option>');
-    });
-    }
-    });
-    }else {
-    $('select[name="kota_id"]').empty();
-    }
-    });
-
-
-    });
-
-
-    </script>
-
-
-{{-- <script>
-    function increaseValue() {
-  var value = parseInt(document.getElementById('number').value, 10);
-  value = isNaN(value) ? 0 : value;
-  value++;
-  document.getElementById('number').value = value;
-}
-
-function decreaseValue() {
-  var value = parseInt(document.getElementById('number').value, 10);
-  value = isNaN(value) ? 0 : value;
-  value < 1 ? value = 1 : '';
-  value--;
-  document.getElementById('number').value = value;
-}
-</script> --}}
 
 
 

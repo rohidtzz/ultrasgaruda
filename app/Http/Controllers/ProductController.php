@@ -88,6 +88,7 @@ class ProductController extends Controller
             'name' => ['required'],
             'price' => ['required'],
             'stock' => ['required'],
+            'desc' => ['required']
         ]);
 
         // dd($validator);
@@ -115,6 +116,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'stock' => $request->stock,
             'size' => "S,M,L,XL,XXL",
+            'desc' => $request->desc,
             'category_id' => 1,
         ]);
 
@@ -147,6 +149,7 @@ class ProductController extends Controller
             'name' => ['required'],
             'price' => ['required'],
             'stock' => ['required'],
+            'desc' => ['required']
         ]);
 
         // dd($validator);
@@ -169,6 +172,7 @@ class ProductController extends Controller
                 'price' => $request->price,
                 'stock' => $request->stock,
                 'size' => "S,M,L,XL,XXL",
+                'desc' => $request->desc,
                 'category_id' => 1,
             ]);
 
@@ -201,6 +205,7 @@ class ProductController extends Controller
                 'price' => $request->price,
                 'stock' => $request->stock,
                 'size' => "S,M,L,XL,XXL",
+                'desc' => $request->desc,
                 'category_id' => 1,
             ]);
 
@@ -215,6 +220,15 @@ class ProductController extends Controller
         return redirect()->back()->with(['success' => 'Registration Success']);
 
 
+
+    }
+
+    public function stock()
+    {
+
+        $product = Product::all();
+
+        return response()->json($product, 200);
 
     }
 

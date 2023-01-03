@@ -53,7 +53,7 @@
             {{-- <li><a href="#">Man</a></li> --}}
             {{-- <li><a href="#">LookBook</a></li>
             <li><a href="#">Blog</a></li> --}}
-            <li><a href="contact.html">Contact</a></li>
+            <li><a href="https://wa.me/62085156850530">Contact</a></li>
 
             {{-- <li><a href="{{ route('login') }}">login</a></li>
             <li><a href="{{ route('register') }}">register</a></li> --}}

@@ -43,6 +43,7 @@
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">No</th>
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
+                    <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Nik</th>
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Username</th>
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">No hp</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Role</th>
@@ -83,6 +84,18 @@
                           </div>
                       </div>
                     </td>
+                    <td>
+                        <div class="text-center">
+                           <div>
+                               <h6 class="mb-0 text-sm text-center">
+                                   {{-- {{ $a->status }} --}}
+
+                                           {{ $a->nik }}
+                               </h6>
+
+                         </div>
+                     </div>
+                   </td>
                     <td>
                       <p class="text-xs font-weight-bold mb-0 text-center">{{ $a->username }}</p>
                     </td>
@@ -134,6 +147,11 @@
                                       <input type="text" name="name" value="{{ $al->name }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
                                       <div id="emailHelp" class="form-text"></div>
                                     </div>
+                                    <div class="mb-3">
+                                        <label for="exampleInputEmail1" class="form-label">Nik</label>
+                                        <input type="text" name="nik" value="{{ $al->nik }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                                        <div id="emailHelp" class="form-text"></div>
+                                      </div>
                                     <div class="mb-3">
                                       <label for="exampleInputPassword1" class="form-label">Email</label>
                                       <input type="text" name="email" value="{{ $al->email }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>

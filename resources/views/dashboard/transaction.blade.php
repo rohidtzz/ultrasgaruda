@@ -44,7 +44,7 @@
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">No invoice</th>
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
                     <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Total</th>
-                    <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Shipping</th>
+                    {{-- <th class="text-uppercase text-center text-secondary text-xxs font-weight-bolder opacity-7">Shipping</th> --}}
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">users</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Product</th>
                     <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Payment</th>
@@ -96,7 +96,7 @@
 
                             @endforeach</p>
                       </td> --}}
-                    <td class="align-middle text-center text-sm">
+                    {{-- <td class="align-middle text-center text-sm">
                       <span class="">
                         @if ($a->shipping)
                         <a type="button" data-id="{{$a->id}}" style="padding-left:10px;" class="text-info font-weight-bold text-xs" data-bs-toggle="modal" data-bs-target="#exampleM-{{ $a->id }}" >
@@ -109,7 +109,7 @@
 
                         @endif
                       </span>
-                    </td>
+                    </td> --}}
                     <td class="align-middle text-center text-sm">
                         <span class="">{{ App\Models\User::find($a->user_id)->name }}</span>
                       </td>
@@ -407,7 +407,7 @@
                                         <td>{{ $value->size }}</td>
                                         <td>{{ $value->qty }}</td>
 
-                                        <td>Rp. {{ number_format($value->total) }}</td>
+                                        <td>Rp. {{ number_format($a->total) }}</td>
 
                                     </tr>
 

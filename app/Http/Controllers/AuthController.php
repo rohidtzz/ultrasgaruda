@@ -31,7 +31,8 @@ class AuthController extends Controller
             'password' => ['required'],
             'email' => ['required','email','unique:users,email'],
             'no_hp' => ['required', 'numeric'],
-            'gender' => ['required']
+            'gender' => ['required'],
+            'nik' => ['required' ,'numeric'],
         ]);
 
         if ($validator->fails()) {
@@ -48,6 +49,7 @@ class AuthController extends Controller
             'email' => $request->email,
             'no_hp' => $request->no_hp,
             'gender' => $request->gender,
+            'nik' => $request->nik,
             'role' => 'user'
         ]);
 

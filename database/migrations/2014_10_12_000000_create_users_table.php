@@ -17,9 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('no_hp');
+            $table->string('nik');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('username')->unique();
-            $table->string('no_hp');
             $table->enum('role',['admin','kordinator','user','guest']);
             $table->enum('gender',['pria','wanita']);
             $table->string('password');

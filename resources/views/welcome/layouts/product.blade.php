@@ -33,14 +33,15 @@
                         <form action="{{ url('/cart/add/' ) }}" method="post">
                             @csrf
                             <input type="hidden" name="id" value="{{ $a->id }}">
-                        <div>Size: <select class="form-select" name="sizes" id="">
+                            <div>{{ $a->desc }}</div>
+                        {{-- <div>Size: <select class="form-select" name="sizes" id="">
                             <option selected value="S">S</option>
                             <option value="M">M</option>
                             <option value="L">L</option>
                             <option value="XL">XL</option>
                             <option value="XXL">XXL</option>
-                        </select></div>
-                        <div>Stock: {{ $a->stock }}</div>
+                        </select></div> --}}
+                        <div id="stok"></div>
 
                         <p><?php echo 'Rp. ' . $number_format; ?></p>
                         @if (Auth::check())
@@ -59,6 +60,33 @@
         </div>
     </div>
 </section>
+<script>
+    $(document).ready(function(){
+
+        // selesai()
+        setInterval(() => {
+            show()
+        }, 1000);
+    });
+
+    function show(){
+
+    $.ajax({
+        url: "/stock",
+        type: "GET",
+        success: function(data){
+            $('#stok').empty()
+            let kata = `stock: ${data[0].stock}`
+
+            document.getElementById("stok").innerHTML = kata
+        },
+        error: function(data){
+            alert("Terjadi Kesalahan!");
+        }
+    });
+
+    }
+</script>
 <!-- Product section end -->
 
 

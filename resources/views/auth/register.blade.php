@@ -207,6 +207,11 @@ form .user-details .input-box{
             <input name="password" name="confirm_password" id="confirm_password"  onkeyup='check();' type="password" placeholder="Confirm your password" required>
             <span id='message'></span>
           </div>
+            <div class="input-box">
+            <span class="details">Nik</span>
+            <input name="nik" type="password" placeholder="Enter Your Nik" required>
+            <span id='message'></span>
+          </div>
         </div>
         <div class="gender-details">
             <input value="pria" type="radio" name="gender" id="dot-1" required>

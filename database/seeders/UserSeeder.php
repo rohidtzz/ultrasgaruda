@@ -24,28 +24,31 @@ class UserSeeder extends Seeder
             'email' => 'rohidammarfirdaus@gmail.com',
             'role' => 'admin',
             'gender' => 'pria',
-            'no_hp' => '891267417'
+            'no_hp' => '891267417',
+            'nik' => '123123'
         ]);
 
         User::create([
-            'name' => 'curva suuu',
-            'username' => 'kordi',
-            'password' => bcrypt('rohid123'),
-            'email' => 'rohidtzz@gmail.com',
+            'name' => 'Yolanda',
+            'username' => 'fajaraja',
+            'password' => bcrypt('fajar536'),
+            'email' => 'ilmiasih536@gmail.com',
             'role' => 'kordinator',
             'gender' => 'pria',
-            'no_hp' => '89267417'
+            'no_hp' => '89267417',
+            'nik' => '123123'
         ]);
 
-        User::create([
-            'name' => 'ini users',
-            'username' => 'users',
-            'password' => bcrypt('rohid123'),
-            'email' => 'gemersrasta@gmail.com',
-            'role' => 'user',
-            'gender' => 'pria',
-            'no_hp' => '8927417'
-        ]);
+        // User::create([
+        //     'name' => 'ini users',
+        //     'username' => 'users',
+        //     'password' => bcrypt('rohid123'),
+        //     'email' => 'gemersrasta@gmail.com',
+        //     'role' => 'user',
+        //     'gender' => 'pria',
+        //     'no_hp' => '8927417',
+        //     'nik' => '123123'
+        // ]);
 
 
     }

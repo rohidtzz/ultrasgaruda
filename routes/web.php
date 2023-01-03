@@ -39,6 +39,8 @@ route::post('/register/post', [AuthController::class,'register']);
 Route::get('/login', [AuthController::class,'login']);
 route::post('/login/post',[AuthController::class, 'login_post']);
 
+Route::get('/stock',[ProductController::class,'stock']);
+
 Route::group(['middleware' => ['role:admin']], function () {
 
     //dashboard
@@ -72,8 +74,8 @@ Route::group(['middleware' => ['role:admin']], function () {
     //cart
     Route::get('/cart', [CartController::class,'index']);
     Route::post('/cart/add/', [CartController::class,'create']);
-    Route::get('/cart/qty/up/{id}', [CartController::class,'plusqty']);
-    Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
+    // Route::get('/cart/qty/up/{id}', [CartController::class,'plusqty']);
+    // Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
     Route::get('/cart/destroy/{id}', [CartController::class,'destroy']);
 
     //users
@@ -122,8 +124,8 @@ Route::group(['middleware' => ['role:admin,kordinator']], function () {
     //cart
     Route::get('/cart', [CartController::class,'index']);
     Route::post('/cart/add/', [CartController::class,'create']);
-    Route::get('/cart/qty/up/{id}', [CartController::class,'plusqty']);
-    Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
+    // Route::get('/cart/qty/up/{id}', [CartController::class,'plusqty']);
+    // Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
     Route::get('/cart/destroy/{id}', [CartController::class,'destroy']);
 
     //users
@@ -156,8 +158,8 @@ Route::group(['middleware' => ['role:admin,kordinator,user']], function () {
     //cart
     Route::get('/cart', [CartController::class,'index']);
     Route::post('/cart/add/', [CartController::class,'create']);
-    Route::get('/cart/qty/up/{id}', [CartController::class,'plusqty']);
-    Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
+    // Route::get('/cart/qty/up/{id}', [CartController::class,'plusqty']);
+    // Route::get('/cart/qty/min/{id}', [CartController::class,'minqty']);
     Route::get('/cart/destroy/{id}', [CartController::class,'destroy']);
 
     //profile
