@@ -83,6 +83,11 @@ class CartController extends Controller
         $price = Product::find($request->id)->price;
 
 
+        $produ = Product::find(1);
+
+        if($produ->stock == 0){
+            return redirect('/');
+        }
 
         // dd($price);
 

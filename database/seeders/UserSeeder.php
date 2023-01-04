@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
             'name' => 'Yolanda',
             'username' => 'fajaraja',
             'password' => bcrypt('fajar536'),
-            'email' => 'ilmiasih536@gmail.com',
+            'email' => 'yolandafajarutama@gmail.com',
             'role' => 'kordinator',
             'gender' => 'pria',
             'no_hp' => '89267417',

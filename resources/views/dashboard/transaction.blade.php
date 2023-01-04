@@ -292,7 +292,7 @@
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $a->id }}">
                                 <span> Transfer ke Rekening BCA:</span><br>
-                                <span>BCA: 252529179 | A/n Rohid ammar firdaus </span>
+                                <span>BCA: 7435183671 | A/n Yolanda Fajar Utama </span>
                                 <p>Isi Form Di bawah ini berserta Bukti Transfer </p>
                                 <p>Jumlah Yang Harus dibayar Rp. {{ number_format($a->total) }}</p>
                                 <span>Contact Person jika ada kendala: 089612121703 (rohid) </span>

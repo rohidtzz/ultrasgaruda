@@ -127,6 +127,12 @@ class TransactionController extends Controller
             return redirect('/home/transaction');
         }
 
+        $produ = Product::find(1);
+
+        if($produ->stock ==0){
+            return redirect('/');
+        }
+
         // $s = Transaction::where('user_id',$id)->get();
         // $k = $s->product_id;
 

@@ -19,7 +19,12 @@
                 <div class="product-item">
                     <figure>
                         <img src="{{ asset('/product/img/'.$a->image) }}" alt="">
-                        <div class="bache sale">SALE</div>
+                        @if ($a->stock == 0)
+                        <div class="bache sale">SOLD</div>
+                        @else
+                        {{-- <div class="bache sale">SALE</div> --}}
+                        @endif
+
 
                     </figure>
                     @php

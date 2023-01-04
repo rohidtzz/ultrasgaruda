@@ -18,12 +18,12 @@ class ProductSeeder extends Seeder
     {
         Product::create([
             'name' => "tiket stadion",
-            'price' => 100000,
+            'price' => 150000,
             'size' => "S,M,L,XL,XXL",
             'category_id' => 1,
             'image' => 'lo.jpg',
-            'stock' => 200,
-            'desc' => 'tiket ug paling keren'
+            'stock' => 20,
+            'desc' => 'tiket ug '
         ]);
 
         // Product::create([
