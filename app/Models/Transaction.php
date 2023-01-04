@@ -25,9 +25,9 @@ class Transaction extends Model
         return $this->hasOne(PaymentTransaction::class,'transaction_id');
     }
 
-    public function shipping(){
-        return $this->hasOne(shipping::class,'transaction_id');
-    }
+    // public function shipping(){
+    //     return $this->hasOne(shipping::class,'transaction_id');
+    // }
 
 
     public function getAutoNumberOptions()
